@@ -1,0 +1,515 @@
+% Mo Jabeen Template for docs 
+
+\documentclass[11pt]{scrartcl} % Font size
+
+\input{structure.tex} % Include the file specifying the document structure and custom commands
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{	
+	\normalfont\normalsize
+	\vspace{20pt} % Whitespace
+	{\huge Basic Statistics}\\ % The meh
+	\vspace{12pt} % Whitespace
+	\rule{\linewidth}{2pt}\\ % Thick bottom horizontal rule
+}
+
+\author{\small Mo D Jabeen} % Your name
+
+\date{\normalsize\today} % Today's date (\today) or a custom date
+
+
+\begin{document}
+
+\maketitle % Print the title
+
+\section{Distribution}
+
+\subsection{What is the bernoulli and binomial distribution?}
+
+Bernoulli distribution: The random variable can either be 0 or 1.\\
+
+Binomial distribution: The random variable remains to have only two
+states, this shows the probability of measuring either state x number of
+times given n independent occurrences.
+
+\section{General}
+
+\subsection{What is the mean, expectation and standard
+deviation?}
+
+The mean is the frequency of each value occurring, multiplied by the
+value all summed for each random variable.
+
+\begin{equation}
+	\overline{x} = 1/n(\Sigma fx)
+\end{equation}
+
+The expectation is the probability of each value multiplied by the
+value, summed for all values. This is the value the mean tends to as the
+sample size increases.
+
+\begin{equation}
+	E(x) = \Sigma x P(X=x)
+\end{equation}
+
+The variance is the average of the squared difference from the mean.
+
+\begin{equation}
+	\sigma^2 = E(X^2) - (E(X))^2
+\end{equation}
+
+The standard deviation is the square root of the variance, showing
+essentially the average distance from the mean:\(\sigma\). \\
+
+An overall shift to all data points will effect expectation and not
+variance:
+
+\begin{equation}
+	E(X \pm a) = E(X) \pm a
+\end{equation}
+
+\begin{equation}
+	Var(X \pm a) = Var(X)
+\end{equation}
+
+An overall multiplier to all data points effects both expectation and
+variance:
+
+\begin{equation}
+	E(aX) = aE(X)
+\end{equation}
+
+\begin{equation}
+	Var(aX) = a^2Var(X)
+\end{equation}
+
+\subsection{Poisson Distribution}
+
+\subsection{What is the poisson distribution
+?}
+
+\begin{itemize}
+\item The random discrete variable is a count of the number of events occurring
+  at random in regions of time and space. Ie radioactive particle emission or saplings in a sample of
+  ground
+
+  \begin{itemize}
+  \item All events are independent
+  \item No two events at the same time
+  \item Over a short period of time or on a small region the probability is
+    the same
+  \end{itemize}
+\end{itemize}
+
+\begin{equation}
+	p_x = P(X=x) = e^{-\lambda} *\lambda^{x/x!}
+\end{equation}
+
+Recurrence formula:
+
+\begin{equation}
+	P(X=x) = \lambda/x * P(X= x-1)
+\end{equation}
+
+\(\lambda\) is the mean var and \(\sqrt(\lambda)\) is the std
+
+95\% of values are between the mean \(\pm\) 2 std
+
+Independent Poisson random variables can be added to give another
+Poisson random variable
+
+\subsection{Continuos variables}
+
+\subsection{What is the difference between continuos and discrete
+variables?}
+
+Discrete variables are a known list of possible numbers
+
+Continuos random variables are infinite.
+
+\subsection{What is relative frequency density and how does it
+translate to
+probability?}
+
+The relative frequency density; is a measurement of the relative
+frequency over a class width (interval between two values). Relative frequency is how many times 
+something happens between two values compared to number of measurements, 
+class width the measurement period.
+
+\begin{equation}
+	\frac{Relative frequency}{class width} = Relative frequency density
+\end{equation}
+
+The probability density function f(x); is the relative frequency density
+as n increases and the class width decreases.\\
+
+Area under a plotted f(x) gives the probability for that range of
+continuos variables.
+
+\begin{equation}
+	P(X<x) = \int_{-\infty}^{x} f(x)
+\end{equation}
+
+\begin{equation}
+	\frac{d}{dx}P(X<x) = f(x)
+\end{equation}
+
+\subsection{How do you calculate the
+Median?}
+
+The median value (m) is when the probability for values above and below
+are 0.5.
+
+\begin{equation}
+	\int_{m}^{\inf} f(x) = 0.5
+\end{equation}
+
+\subsection{How do you calculate a
+Percentile?}
+
+The Xth percentile is the value below which the probability is X/100:
+
+90th percentile
+
+\begin{equation}
+	P(X<x_{90th}) = 0.9
+\end{equation}
+
+\subsection{How do you calculate the
+Mean?}
+
+If assume the a small width of delta x, the mean will be
+\(\sum x(f(x)\delta(x))\) (the brackets give the probability and
+multiplying by x gives the mean). As delta x tends to 0 this becomes:
+
+\begin{equation}
+	\bar{x} = \int xf(x)
+\end{equation}
+
+The population mean is then :
+
+\begin{equation}
+	\mu = \int_{-\infty}^{\infty} xf(x) dx
+\end{equation}
+
+The variance is:
+
+\begin{equation}
+	Var(x) = \int_{-\infty}^{\infty} (x -\mu)^2 f(x) dx
+\end{equation}
+
+\section{Estimation}
+
+\subsection{What is a normal distribution
+?}
+
+\textbf{Normal distribution} : Data set centered evenly about a value,
+giving a bell curve.
+
+\subsection{How do you calculate the confidence interval
+?}
+
+To calculate the confidence interval of a population mean, use the
+variable Z below, where \(\bar{X}\) is variable corresponding to the
+sample mean:
+
+\begin{equation}
+	Z = (\bar{X} - \mu)/ (\sigma/ \sqrt{n})
+\end{equation}
+
+For a normal distribution with mean 0 and std of 1 N(0,1) the confidence
+interval is:
+
+\begin{equation}
+	(\bar{x} - 1.96 (\sigma/\sqrt{n}),\bar{x} - 1.96 (\sigma/\sqrt{n}))
+\end{equation}
+
+The above interval on an average of 95\% of the time will include the
+mean.
+
+\subsection{What is a T
+Distribution?}
+
+If the the sample size is limited and below 30, then instead of a normal
+and T distribution is used.
+
+A T dist has degrees of freedom (v) = n-1:
+
+\begin{itemize}
+\item A normal distribution has degrees of freedom v = \(\infty\)
+\item n being the sample size
+\end{itemize}
+
+If the variance is unknown and n is large, Z can be adjusted to use
+s\^{}2 which is an unbiased estimate of the variance. This gives two
+random variables in the equation X and S:
+
+\begin{equation}
+	T = (\bar{X} - \mu)/ (S/\sqrt{n})
+\end{equation}
+
+c is the critical value depending on the distribution parameters and the
+confidence interval required:
+
+\begin{equation}
+	(\bar{x} + c(s\sqrt{n}),\bar{x} - c(s\sqrt{n}))
+\end{equation}
+
+\subsection{How is s calculated ?}
+
+\begin{equation}
+	s^2 = 1/(n-1) * \sum(x-\bar{x})^2
+\end{equation}
+
+\section{Hypothesis testing}
+
+\subsection{What are the two hypothesis
+statements?}
+
+2 hypothesis are given the null (\(H_o\)) and the alternative (\(H_1\)):
+- Null gives a specific parameter value - Alternative gives a range of
+values
+
+Example of a parameter used is the population mean (\(\mu\))
+
+\subsection{How do you determine the confidence of a given null
+hypothesis
+?}
+
+A normal distribution of N(\(\mu, \sigma^2\)) can be related to N(0,1)
+by using \(z = (\bar{x} - \mu)/ (\sigma/\sqrt{n})\).\\
+
+A normal distribution if the variable is adjusted to be the sample mean
+\(\bar{X}\) using the mean from the null hypothesis will become
+N(\(\mu_o,\sigma^2/n\)).\\
+
+This can then be used in the form:\(P(\bar{X} > x) = P(z > (x-\mu) /\sigma)\) ; 
+
+This is then used to calculate the confidence percentage, from the tails of the distribution
+of a N(0,1).\\
+
+\textbf{Two tailed tests gives a much more complete analysis of the data
+set.}
+
+\subsection{What are some basic terms
+?}
+
+\emph{Test statistic} : Function of data used to determine between
+\(H_o\) and\(H_1\)
+
+\emph{The critical region}: Values that lead to rejection of \(H_o\) in
+favour of \(H_1\) is the critical region.
+
+\emph{Significance level}: The probability \(H_o\) is rejected for
+\(H_1\)
+
+\subsection{What are the error types
+?}
+
+\emph{Type 1 error}: \(H_0\) is rejected for \(H_1\) however it was
+correct; This is mitigated by choosing a low significance level.
+
+\emph{Type 2 error}: \(H_o\) is accepted but incorrect.
+
+\subsection{What is the suggested test procedure
+?}
+
+\begin{enumerate}
+\item State the two hypothesis (Null and alternative)
+\item Choose the appropriate test statistic and distribution
+\item Choose significance level
+\item Collect data
+\item Analyze
+\end{enumerate}
+
+To avoid bias the sig level should be chosen before any data is
+collected
+
+If the dataset is approximately normal dist then use the standard N(0,1)
+
+\subsection{How does confidence level relate to significance level
+?}
+
+If \(\mu_0\) is outside the range of \(\alpha\)\% confidence level, then
+the significance level is (100-\(\alpha\)\%)
+
+\subsection{Chi squared dist}
+
+Uses the standard v degrees of freedom.
+
+Only used for non negative random variables (generally for freq
+measurements) to determine if two variables are dependant or
+independent. This includes if a variable is bias by comparing it to the
+expected non bias result.
+
+\begin{figure}[h] % [h] forces the figure to be output where it is defined in the code (it suppresses floating)
+	\centering
+	\includegraphics[width=0.5\columnwidth]{Chi-square_pdf.png} % Example image
+	\caption{Chi square}
+\end{figure}
+
+As shown it is a skewed dist, as v increases the skew decreases.
+
+\subsection{How do you test for
+bias?}
+
+The difference between the expected (non bias result) and the observed
+result will indicate bias.
+
+Both size and relative size matter:
+
+\begin{equation}
+	(O-E) * (O-E)/E = (O-E)^2/E
+\end{equation}
+
+O: Observed, E: Expected
+
+\subsection{What value is used to determine goodness of fit between
+two
+models?}
+
+\begin{equation}
+	X^2 = \sum^{m}_{i=1} (O_i - E_i)^2/E_i
+\end{equation}
+
+Where m is the number of different outcomes for each model (columns).
+
+\textbf{Large value of \(X^2\) suggest a lack of fit}
+
+\subsection{\texorpdfstring{How does \(X^2\) relate to Chi squared
+?}{How does X\^{}2 relate to Chi squared ?}}
+
+Chi squared dist approximately shows the probability distribution of
+\(X^2\), if the freq values \textgreater{} 5 :
+
+\begin{equation}
+	X^2 = \chi^2_{m-1}
+\end{equation}
+
+\subsection{What is a contingency table
+?}
+
+A table with more than two variables being measured against (two+ rows)
+
+The degree of freedom is : \(v= (r-1)(c-1)\)
+
+r: rows, c: columns
+
+\textbf{If \(X^2\) is within the chi squared 95\% interval it should be
+accepted as independent.}
+
+\subsection{What should you do with a 2x2 table
+?}
+
+Can use the alternative:
+
+\begin{equation}
+	X^2 = \sum (|O-E|-0.5)^2/E
+\end{equation}
+
+\end{document}
+
+%----------------------------------------------------------------------------------------
+%	FIGURE EXAMPLE
+%----------------------------------------------------------------------------------------
+
+% \begin{figure}[h] % [h] forces the figure to be output where it is defined in the code (it suppresses floating)
+% 	\centering
+% 	\includegraphics[width=0.5\columnwidth]{IMAGE_NAME.jpg} % Example image
+% 	\caption{European swallow.}
+% \end{figure}
+
+%----------------------------------------------------------------------------------------
+% MATH EXAMPLES
+%----------------------------------------------------------------------------------------
+
+% \begin{align} 
+% 	\label{eq:bayes}
+% 	\begin{split}
+% 		P(A|B) = \frac{P(B|A)P(A)}{P(B)}
+% 	\end{split}					
+% \end{align}
+
+%----------------------------------------------------------------------------------------
+%	LIST EXAMPLES
+%----------------------------------------------------------------------------------------
+
+% \begin{itemize}
+% 	\item First item in a list 
+% 		\begin{itemize}
+% 		\item First item in a list 
+% 			\begin{itemize}
+% 			\item First item in a list 
+% 			\item Second item in a list 
+% 			\end{itemize}
+% 		\item Second item in a list 
+% 		\end{itemize}
+% 	\item Second item in a list 
+% \end{itemize}
+
+%------------------------------------------------
+
+% \subsection{Numbered List}
+
+% \begin{enumerate}
+% 	\item First item in a list 
+% 	\item Second item in a list 
+% 	\item Third item in a list
+% \end{enumerate}
+
+%----------------------------------------------------------------------------------------
+%	TABLE EXAMPLE
+%----------------------------------------------------------------------------------------
+
+% \section{Interpreting a Table}
+
+% \begin{table}[h] % [h] forces the table to be output where it is defined in the code (it suppresses floating)
+% 	\centering % Centre the table
+% 	\begin{tabular}{l l l}
+% 		\toprule
+% 		\textit{Per 50g} & \textbf{Pork} & \textbf{Soy} \\
+% 		\midrule
+% 		Energy & 760kJ & 538kJ\\
+% 		Protein & 7.0g & 9.3g\\
+% 		\bottomrule
+% 	\end{tabular}
+% 	\caption{Sausage nutrition.}
+% \end{table}
+
+%----------------------------------------------------------------------------------------
+%	CODE LISTING EXAMPLE
+%----------------------------------------------------------------------------------------
+
+% \begin{lstlisting}[
+% 	caption= Macro definition, % Caption above the listing
+% 	language=python, % Use Julia functions/syntax highlighting
+% 	frame=single, % Frame around the code listing
+% 	showstringspaces=false, % Don't put marks in string spaces
+% 	numbers=left, % Line numbers on left
+% 	numberstyle=\large, % Line numbers styling
+% 	]
+
+% 	CODE
+
+% \end{lstlisting}
+
+%----------------------------------------------------------------------------------------
+%	CODE LISTING FILE EXAMPLE
+%----------------------------------------------------------------------------------------
+
+% \lstinputlisting[
+% 	caption=Luftballons Perl Script., % Caption above the listing
+% 	label=lst:luftballons, % Label for referencing this listing
+% 	language=Perl, % Use Perl functions/syntax highlighting
+% 	frame=single, % Frame around the code listing
+% 	showstringspaces=false, % Don't put marks in string spaces
+% 	numbers=left, % Line numbers on left
+% 	numberstyle=\tiny, % Line numbers styling
+% 	]{luftballons.pl}
+
+%------------------------------------------------
+
+\end{document}
