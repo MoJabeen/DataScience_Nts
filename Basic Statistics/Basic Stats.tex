@@ -25,17 +25,32 @@
 
 \maketitle % Print the title
 
-\section{Distribution}
-
-\subsection{What is the bernoulli and binomial distribution?}
-
-Bernoulli distribution: The random variable can either be 0 or 1.\\
-
-Binomial distribution: The random variable remains to have only two
-states, this shows the probability of measuring either state x number of
-times given n independent occurrences.
+The example used will be the size of carrots in a farm, on the current batch.
 
 \section{General}
+
+\subsection{What is population and sample?}
+
+\textbf{Population:} Entire data set, ie all the carrots.
+
+\textbf{Sample:} A portion of the dataset, ie 30 carrots.
+
+\subsection{What is a parameter or statistics?}
+
+\textbf{Parameter:} Attribute from population ie mean of carrots based on all carrots.
+
+\textbf{Statistic:} Attribute from sample ie mean from 30 carrots.\\
+
+Random selection of the sample allows for much better statistical inference as it removes any
+bias.
+
+\subsection{What is a regression test?}
+
+Determines if a prediction variables changes effect the outcome variable.
+
+\subsection{What are degrees of freedom?}
+
+The number of independent pieces of info used to calculate a statistic.
 
 \subsection{What is the mean, expectation and standard
 deviation?}
@@ -86,42 +101,25 @@ variance:
 	Var(aX) = a^2Var(X)
 \end{equation}
 
-\subsection{Poisson Distribution}
+\subsection{Geometric Mean}
 
-\subsection{What is the poisson distribution
-?}
+Mean based on the product of all values, finding the nth root.
+
+\begin{equation}
+	\Pi{x}^{1/N}
+\end{equation}
+
+N is the number of values.
+
+\subsubsection{What is it good for?}
 
 \begin{itemize}
-\item The random discrete variable is a count of the number of events occurring
-  at random in regions of time and space. Ie radioactive particle emission or saplings in a sample of
-  ground
-
-  \begin{itemize}
-  \item All events are independent
-  \item No two events at the same time
-  \item Over a short period of time or on a small region the probability is
-    the same
-  \end{itemize}
+	\item For fraction based values ie percentages
+	\item Dependant values
+	\item Wildly varying values, less skewed by large data values
 \end{itemize}
 
-\begin{equation}
-	p_x = P(X=x) = e^{-\lambda} *\lambda^{x/x!}
-\end{equation}
-
-Recurrence formula:
-
-\begin{equation}
-	P(X=x) = \lambda/x * P(X= x-1)
-\end{equation}
-
-\(\lambda\) is the mean var and \(\sqrt(\lambda)\) is the std
-
-95\% of values are between the mean \(\pm\) 2 std
-
-Independent Poisson random variables can be added to give another
-Poisson random variable
-
-\subsection{Continuos variables}
+\section{Continuos variables}
 
 \subsection{What is the difference between continuos and discrete
 variables?}
@@ -201,13 +199,189 @@ The variance is:
 	Var(x) = \int_{-\infty}^{\infty} (x -\mu)^2 f(x) dx
 \end{equation}
 
-\section{Estimation}
+\subsection{Inferential Statistics}
+
+Draw conclusions and predictions based on the data.
+
+\subsubsection{What is a confidence interval ?}
+
+Taking into account sampling error give a range of values for the parameter and certainty percentage.
+
+i.e. Carrots mean is [8 12cm] at 95\%.
+
+\section{Data Validation}
+
+\begin{itemize}
+	\item Constraints
+	\item Visual graphing
+	\item Distribution measurements (check if mean, median and mode are similar)
+	\item Good fit tests (Chi squared)
+	\item Independence test (Chi squared)
+	\item Check for missing or errored data
+\end{itemize}
+
+\section{Distribution}
+
+\subsection{General}
+
+\begin{equation}
+	X \sim N(\mu,\sigma^2)
+\end{equation}
+
+The random variable "X", belongs to "\(\sim\)" a normal distribution "N" with a specific mean and variance.
+
+\subsubsection{What is a probability mass function?}
+
+\textbf{PMF:} For discrete variables, it can give a calculation of the probability of an exact value.
+
+\begin{figure}[h] % [h] forces the figure to be output where it is defined in the code (it suppresses floating)
+	\centering
+	\includegraphics[width=0.5\columnwidth]{probability-example-egg-weight.png} % Example image
+	\caption{Chi square}
+\end{figure}
+
+\begin{table}[h] % [h] forces the table to be output where it is defined in the code (it suppresses floating)
+	\centering % Centre the table
+	\begin{tabular}{l l}
+		\toprule
+		\textit{Dist} & \textbf{Description} \\
+		\midrule
+		Binomial & Two states, the number of times one states shows in n trials \\
+		Bernoulli & Random variable is either one of two states \\
+		Discrete Uniform & probability of each state is equal \\
+		Poisson & Prob an event will happen k times in a given period of time or spaces \\
+		\bottomrule
+	\end{tabular}
+	\caption{PMF Dist}
+\end{table}
+
+\subsubsection{What is a probability density function ?}
+
+\textbf{PDF():} For continous variables the probability of a single value is neglible and therefore
+assumed at zero, instead intervals probability is calculated. Instead for a given the probability density function is used,
+which measures the number of times a value is shown in a sample (its density).\\
+
+Example: a carrot is 10cm, if the carrot shows as 10cm once in sample of 50, the PDF is 1/50.
+
+Can determine the probability by finding multiplying a interval by its PDF.
+
+\begin{table}[h] % [h] forces the table to be output where it is defined in the code (it suppresses floating)
+	\centering % Centre the table
+	\begin{tabular}{l l}
+		\toprule
+		\textit{Dist} & \textbf{Description} \\
+		\midrule
+		Normal & Centered on the mean, bell shaped\\
+		Continuos Uniform & Equal intervals have equal probability \\
+		Log normal & Right skewed, normal when logged \\
+		Exponential & Higher prob for small values than large values.\\
+		\bottomrule
+	\end{tabular}
+	\caption{PDF Distributions}
+\end{table}
+
+\subsection{What is the bernoulli and binomial distribution?}
+
+Bernoulli distribution: The random variable can either be 0 or 1.\\
+
+Binomial distribution: The random variable remains to have only two
+states, this shows the probability of measuring either state x number of
+times given n independent occurrences.
+
+\subsection{Poisson Distribution}
+
+\subsection{What is the poisson distribution
+?}
+
+\begin{itemize}
+\item The random discrete variable is a count of the number of events occurring
+  at random in regions of time and space. Ie radioactive particle emission or saplings in a sample of
+  ground
+
+  \begin{itemize}
+  \item All events are independent
+  \item No two events at the same time
+  \item Over a short period of time or on a small region the probability is
+    the same
+  \end{itemize}
+\end{itemize}
+
+\begin{equation}
+	p_x = P(X=x) = e^{-\lambda} *\lambda^{x/x!}
+\end{equation}
+
+Recurrence formula:
+
+\begin{equation}
+	P(X=x) = \lambda/x * P(X= x-1)
+\end{equation}
+
+\(\lambda\) is the mean var and \(\sqrt(\lambda)\) is the std
+
+95\% of values are between the mean \(\pm\) 2 std
+
+Independent Poisson random variables can be added to give another
+Poisson random variable
 
 \subsection{What is a normal distribution
 ?}
 
 \textbf{Normal distribution} : Data set centered evenly about a value,
 giving a bell curve.
+
+\subsubsection{How does std related to a normal dist?}
+
+\begin{table}[h] % [h] forces the table to be output where it is defined in the code (it suppresses floating)
+	\centering % Centre the table
+	\begin{tabular}{l P{2.5cm}}
+		\toprule
+		\textbf{STD} & \textbf{Percentage of values included (\%)}\\
+		\midrule
+		\(\sigma\) & 68 \\
+		\(2\sigma\) & 95 \\
+		\(3\sigma\) & 99.7 \\
+		\bottomrule
+	\end{tabular}
+	\caption{std relation}
+\end{table}
+
+\subsubsection{What dist do multiple large mean samples show ?}
+
+They will show a normal dist, even if the variable itself doesn't show a normal dist.
+
+\subsection{Standard Normal Distribution}
+
+Also known as z dist is a normal dist with mean = 0 and std = 1. Any normal dist can be converted
+into a z dist, using the below formula to work out the z value (which calculates how many std vals
+a value x from the mean is).
+
+\begin{equation}
+	z = \frac{x - \mu}{\sigma}
+\end{equation}
+
+Great reference to use as all numbers have been calculated. Can allow:
+
+\begin{itemize}
+	\item Comparisons of sample mean to population mean
+	\item Compare different N dists (different mean and var)
+\end{itemize}
+
+\subsection{Chi Squared Distribution}
+
+Not a reflection of real world distributions, but instead used for testing. Shaped by k (degrees of freedom)
+, made of squared z dist with different layers of multiple of std added.
+
+\begin{equation}
+	\chi^2_{k} = (Z_1)^2 + (Z_2)^2 ... + (Z_{n\sigma})^2
+\end{equation}
+
+Hypothesis tests follow the chi squared dist under the null hypothesis. A commonly used tests is the
+Pearson chi squared test. There is also a non centered chi squared dist for any skewed data.\\
+
+Goodness of fit tests measures how well a model fits a set of observations, there is also the chi
+squared Independence test.
+
+\section{Estimation}
 
 \subsection{How do you calculate the confidence interval
 ?}
