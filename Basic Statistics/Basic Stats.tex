@@ -220,6 +220,76 @@ i.e. Carrots mean is [8 12cm] at 95\%.
 	\item Check for missing or errored data
 \end{itemize}
 
+\subsection{Skew}
+
+A dist can have right(positive), or left(negative) or zero skew. A quick check for skew is a frequency histogram.
+
+Right skew, has a very long tail, on its right side (mean > median).\\
+
+Normal dist has 0 skew, all symmetry dists have 0 skew.
+
+\begin{equation}
+	Pearsons\; Skew = 3*\frac{Mean-Median}{std}
+\end{equation}
+
+If skewed you can transform using square rooting, ln, log10 respectively as the skew is progressively worse.
+
+\subsection{Kurtosis}
+
+Measure of taildness of a distribution, how often outliers occur. Measured by checking the standardized 4th moment of a distribution.
+
+\begin{equation}
+	Kurtosis = \hat{\mu_4} = \frac{\mu_4}{\sigma^4}
+\end{equation}
+
+\(\mu_4\) is the unstandardized 4th moment.
+
+\textbf{The above formula is biased, unbiased formula uses a correction of sample size (find online)}
+
+\subsection{Effect Size}
+
+Practical significance measure of if the found relationship has a real world impact.
+
+Both Cohen d and pearsons R have guides on values showing levels of significance.
+
+\subsubsection{What is Cohens d?}
+
+Size of the difference between two groups.
+
+\begin{equation}
+	d = \frac{\bar{x_1} - \bar{x_2}}{s}
+\end{equation}
+
+s is the std from either a pooled data of the two groups or a control group.
+
+\subsubsection{What is Pearsons r?}
+
+Measures correlation by measuring variability, ie measure the effect size nutrients in the soil changes carrot length.
+
+If positive the correlation is in the same direction and if negative its opposite.
+
+\subsection{Coefficient of determination \(R^2\)}
+
+How well a statistical model predicts an outcome. A goodness of fit, how close a models variance shows the dependant variables variance.\\
+
+Can use the Pearsons correlation coefficent or least squares estimate.
+
+\subsection{Alkaline Information Criteria}
+
+How well a model fits the data it was generated from.\\
+
+\textit{The best model explains the greatest amount of variation with the fewest independent variables.}\\
+
+Method: Choose a number of models with different number of independent variables and determine which is the best.
+
+\begin{equation}
+	AIC = 2(K) * 2ln(L)
+\end{equation}
+
+K: Number of independent variables
+
+L: Log likelihood estimate
+
 \section{Distribution}
 
 \subsection{General}
@@ -237,7 +307,7 @@ The random variable "X", belongs to "\(\sim\)" a normal distribution "N" with a 
 \begin{figure}[h] % [h] forces the figure to be output where it is defined in the code (it suppresses floating)
 	\centering
 	\includegraphics[width=0.5\columnwidth]{probability-example-egg-weight.png} % Example image
-	\caption{Chi square}
+	\caption{PMF}
 \end{figure}
 
 \begin{table}[h] % [h] forces the table to be output where it is defined in the code (it suppresses floating)
@@ -381,29 +451,6 @@ Pearson chi squared test. There is also a non centered chi squared dist for any 
 Goodness of fit tests measures how well a model fits a set of observations, there is also the chi
 squared Independence test.
 
-\section{Estimation}
-
-\subsection{How do you calculate the confidence interval
-?}
-
-To calculate the confidence interval of a population mean, use the
-variable Z below, where \(\bar{X}\) is variable corresponding to the
-sample mean:
-
-\begin{equation}
-	Z = (\bar{X} - \mu)/ (\sigma/ \sqrt{n})
-\end{equation}
-
-For a normal distribution with mean 0 and std of 1 N(0,1) the confidence
-interval is:
-
-\begin{equation}
-	(\bar{x} - 1.96 (\sigma/\sqrt{n}),\bar{x} - 1.96 (\sigma/\sqrt{n}))
-\end{equation}
-
-The above interval on an average of 95\% of the time will include the
-mean.
-
 \subsection{What is a T
 Distribution?}
 
@@ -432,11 +479,161 @@ confidence interval required:
 	(\bar{x} + c(s\sqrt{n}),\bar{x} - c(s\sqrt{n}))
 \end{equation}
 
+\section{Estimation}
+
+\subsection{What is the confidence interval?}
+
+Mean of estimate \(\pm\) variation in estimate \\
+
+The interval is a range with a certainty value if the test was repeated in the same way the with a different sample,
+the result would be the same. Essentially its a method of minimizing the sample errors effect, however does not give
+a certainty on the "true value". 
+
+\subsection{How is the confidence interval determined?}
+
+The interval is 1-\(\alpha\), where alpha is determined arbitrarily by the field of research.
+
+\subsection{What is the critical value?}
+
+It is how many stds you need to go from the mean, before you reach the confidence level. To calculate the critical value
+normally a transformation to a z dist is performed as the critical values are well known.
+
+\subsection{How do you calculate the critical value?}
+
+The critical value is the when the probability of the answer is between your interval. If converted to a z score, the
+value should always be less than z value at the chosen interval.\\
+
+\textit{Use two tailed for a 2 dimensional comparison and one tail for a 1 dimensional comparison.}\\
+
+For a two tailed test looking for an interval of 95\% the alpha is 0.025 and the value is 1.96.
+
+\subsection{How do you calculate the confidence interval
+?}
+
+If n observations are made from a N(\(\mu,\sigma^2)\) dist, the random variable mean from each observation will have
+mean of \(\mu\) and variance of \(\frac{\sigma^2}{n}\).\\
+
+To calculate the confidence interval of a sample mean, use the
+variable Z below, where \(\bar{X}\) is random variable corresponding to the
+sample mean:
+
+\begin{equation}
+	Z = (\bar{X} - \mu)/ (\sigma/ \sqrt{n})
+\end{equation}
+
+This value should then be greater or less than the critical value, giving the result.
+
+For a normal distribution with mean 0 and std of 1 N(0,1) the confidence
+interval (95\%) is:
+
+\begin{equation}
+	(\bar{x} + 1.96 (\sigma/\sqrt{n}),\bar{x} - 1.96 (\sigma/\sqrt{n}))
+\end{equation}
+
+The above interval on an average of 95\% of the time will include the
+mean.
+
 \subsection{How is s calculated ?}
+
+s is the \textbf{sample} std, not the population which is \(\sigma\).
 
 \begin{equation}
 	s^2 = 1/(n-1) * \sum(x-\bar{x})^2
 \end{equation}
+
+\section{Statistical tests}
+
+\subsection{What are stats tests used for?}
+
+\begin{itemize}
+	\item Determine predictor vs outcome relationship
+	\item Estimate diff between two or more groups
+\end{itemize}
+
+The null hypothesis for any statistical test is that there is no relationship or difference between the two groups.\\
+
+A number of assumptions regarding Independence, homogenity (similar variance) and normality (N()) are required to use
+\textbf{parametric tests}. If they are violated non parametric tests can be used.
+
+\subsection{How are test statistics used?}
+
+Test statistics measure the relationship between the variables and the null hypothesis.
+
+\subsection{What is the p value?}
+
+P value is the probability that the observed test stat indicates the null hypothesis is true.
+
+\subsection{What are the types of values used in stats tests?}
+
+\begin{table}[h] % [h] forces the table to be output where it is defined in the code (it suppresses floating)
+	\centering % Centre the table
+	\begin{tabular}{l l}
+		\toprule
+		\textit{Variable} & \textbf{Description} \\
+		\midrule
+		Continuos & quantitative real data\\
+		Discrete & quantitative integer data\\
+		Ordinal & Order based data ie rankings\\
+		Nominal & Names ie brand names \\
+		Binary & bits \\
+		\bottomrule
+	\end{tabular}
+	\caption{Variable types}
+\end{table}
+
+\subsection{Parametric Tests}
+
+See table ~\ref{table:parametric} on ~\pageref{table:parametric}.
+
+\begin{table}[h] % [h] forces the table to be output where it is defined in the code (it suppresses floating)
+	\centering % Centre the table
+	\begin{tabular}{P{2.5cm} P{2.5cm} P{2.5cm} P{2.5cm}}
+		\toprule
+		\textbf{Test} & \textbf{Predictor Var} & \textbf{Outcome Var} & \textbf{Ex} \\
+		\midrule
+		Simple Linear Regression & Continuos,1 predictor & Continuos, 1 outcome & How does moisture effect carrot size\\
+		\midrule
+		Multiple Linear Regression & Continuos, 2+ predictor & Continuos, 1 outcome & How does moisture and temp effect carrot size\\
+		\midrule
+		Logistic regression & Continuos, 1 predictor & Binary, 1 outcome & What is the effect of soil nutrient level on carrot death \\
+		\midrule
+		Paired t test & Categorical, 1 predictor & Quantitative, set of population & What is the effect of two soil types on carrot mean length from one batch\\ 
+		\midrule
+		Independent t test & Categorical, 1 predictor & Quantitative, sets from different population & Difference in mean carrot length from two farms\\
+		\midrule
+		ANOVA & Categorical, 1+ predictor & Quantitative,1 outcome & Average carrot length with three different soil types\\
+		\midrule
+		MANOVA & Categorical, 1+ predictor & Quantitative, 2+ outcomes & Average carrot length and width effected by soil type and seed type\\
+		\midrule
+		Pearsons r & Continuos, 2+ & Continuos, 1 & How are carrot length and leaf length correlated \\
+		\bottomrule
+	\end{tabular}
+	\caption{Parametric tests}
+	\label{table:parametric}
+\end{table}
+
+\subsection{Nonparametric tests}
+
+See table ~\ref{table:nonparametric} on ~\pageref{table:nonparametric}.
+
+\begin{table}[h] % [h] forces the table to be output where it is defined in the code (it suppresses floating)
+	\centering % Centre the table
+	\begin{tabular}{P{2.5cm} P{2.5cm} P{2.5cm} P{2.5cm}}		
+		\toprule
+		\textbf{Test} & \textbf{Predictor Var} & \textbf{Outcome Var} & \textbf{Instead of} \\
+		\midrule
+		Spearmens r & Quantitative & Quantitative & Pearsons r \\
+		Sign test & Categorical & Quantitative & One sample t test \\
+		Chi square Independence & Categorical & Categorical & Pearsons r\\
+		Kruskal-Wallis H & Categorical, 3+ & Quantitative & ANOVA\\
+		ANOISM & Categorical, 3+ & Quantitative 2+ & MANOVA \\
+		Wilcoxon Rank Sum & Categorical, 2 & Quantitative, diff pops & Independent t test\\
+		Wilcoxon Signed-rank test & Categorical 2, & Quantitative, same pop & Paired t test\\
+		\bottomrule
+	\end{tabular}
+	\caption{Non parametric tests}
+	\label{table:nonparametric}
+\end{table}
 
 \section{Hypothesis testing}
 
