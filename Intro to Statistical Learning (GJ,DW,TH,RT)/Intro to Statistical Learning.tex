@@ -328,7 +328,31 @@ If area under the curve is <=0.5 its assumed the performance is no better than c
 
 \subsection{Quadratic Discrimanant Analysis}
 
+The main differnce to LDA is that there is not an assumption of common variance between distribution,
+this leads to a quadratic boundary function. 
 
+\subsubsection{What are the pros/cons of QDA?}
+
+More flexiblie, accomdates differing class distributions and therefore has lower bias.\\
+
+It is more compute intensive and has higher variance.
+
+\subsubsection{How do you choose between LDA and QDA?}
+
+Compare the correlation between class and observations for each class, if they are all similar shows
+the variance is likley similar. And thefore LDA is a good choice otherwise QDA is.
+
+\subsection{How do you choose between LDA and Logistic for binary scenarios?}
+
+Main differntial is that LDA assumes normal distribution of class, logistic does not.
+
+\subsection{Differences with KNN?}
+
+Descion boundaries cant be weigted towards classes, however it is the most flexible choice.
+
+\subsection{Methods to improve non linear performance?}
+
+Can improve non linear peformance by adding transformed predictors, ie \(X_1^2,X_2^2\) etc.
 
 %----------------------------------------------------------------------------------------
 %	FIGURE EXAMPLE
