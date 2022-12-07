@@ -40,10 +40,10 @@ where y = f(x) + error.
 \subsection{Notation}
 
 \begin{equation}
-	x_{ij}, i:1,2,...n, j:1,2,...p
+	x_{ij}, i:1,2,\cdots n, j:1,2,\cdots p
 \end{equation}
 \begin{equation}
-	x_{i} = (x{i1},x_{i2},x_{i3}...,x_{ip})
+	x_{i} = (x{i1},x_{i2},x_{i3} \cdots,x_{ip})
 \end{equation}
 
 i is the observation and j is the predictor.
@@ -212,7 +212,7 @@ These parameters from this can be validated in the same way.
 Match the number of preidctors to the number of parameters:
 
 \begin{equation}
-	ln\frac{p(x)}{1-p(x)} = \beta_o + \beta_1x_{i1} + \beta_2x_{i2} + ... \beta_px_{ip}
+	\ln\frac{p(x)}{1-p(x)} = \beta_o + \beta_1x_{i1} + \beta_2x_{i2} + \cdots \beta_px_{ip}
 \end{equation}
 
 Multiple predictors can show how the interweaving between each other and the outcome. Not shown when not included if 
@@ -277,11 +277,11 @@ Each predictor follows a one dimensional normal dist with some correlation betwe
 	\centering
 	\includegraphics[width=\columnwidth]{MultiVariate Normal.jpeg} % Example image
 	\caption{Multivariate Normal Dist}
-	\label{multi normal}
+	\label{multi-normal}
 \end{figure}
 
 Think of one dimensional as collapsing into the left side or down. If the var is equal and correlation=0
-then the image on the left in \ref{multi normal} with a circular bottom is produced, if otherwise skewed,
+then the image on the left in \ref{multi-normal} with a circular bottom is produced, if otherwise skewed,
 as shown on the right.
 
 \begin{equation}
