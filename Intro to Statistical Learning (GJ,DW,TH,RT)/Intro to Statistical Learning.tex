@@ -178,6 +178,15 @@ Likelhood function:
 \subsection{What is standard error?}
 
 \begin{equation}
+	SE(\alpha^2) = x
+	\label{normalSE}
+\end{equation}
+
+\ref{normalSE} shows for each sample expect \(\alpha\) to very by x on average.
+
+The below is the standard erorr of the mean ie std/n:
+
+\begin{equation}
 	SE(\mu)^2 = \frac{\sigma^2}{n}
 \end{equation}
 
@@ -190,6 +199,8 @@ The below is based on how the Betas are calculated (this is for linear regressio
 \begin{equation}
 	SE(\beta_1)^2 = \frac{\sigma^2}{\sum{(x_i-\bar{x})^2}}
 \end{equation}
+
+
 
 \subsection{What ways can you validate the parameters?}
 
@@ -353,6 +364,64 @@ Descion boundaries cant be weigted towards classes, however it is the most flexi
 \subsection{Methods to improve non linear performance?}
 
 Can improve non linear peformance by adding transformed predictors, ie \(X_1^2,X_2^2\) etc.
+
+\section{Resampling methods}
+
+Completley seperate data as the test set may not make sense to use as that could be used as
+a valuable method to train the orignial data set. So instead you can repeatadley draw samples
+from the data set you have and refit the model and compare to other samples as test data to gain
+info about the models setup.\\
+
+\textbf{Model assessment:} Evaluating a models performance.
+
+\textbf{Model selection:} Determining a models flexibilty.\\
+
+\textit{Side note: Can determine if a transformation is valid using hypothesis tests.}
+
+\subsection{Cross Validation}
+
+\subsubsection{What is the validation set approach?}
+
+Randomly divide the data into a training and test set. The issue is there will be less data used
+for training the model with each split, will most likley overestimate the test error.
+
+\subsubsection{What is leave one out cross valiation (LOOCV)?}
+
+Use a single observation as the validation set, the rest as training and loop through all data points.
+
+Use the average MSE from all models and validations point:
+
+\begin{equation}
+	CV_n = \frac{1}{n} \sum MSE
+\end{equation}
+
+The benefits to this are:
+\begin{enumerate}
+	\item less bias in model as the training set is much bigger
+	\item No randomness in method so consistent results produced
+\end{enumerate}
+
+This is a very flexible method, however, does require large computation.
+
+\subsubsection{What is K fold cross validation?}
+
+Seperate into K sets, 1 set is the validation and the rest are used for training. Loop through switching
+the validation set to each Kth set, taking the average across n sets as the error. 
+The main benefit is the computational costs.
+
+Generally the result produced for using K as a reasonable number (>5), produces a result similar to
+LOOCV (K=n).\\
+
+The mean of many highly correlated samples has a higher variance than if uncorrelated. And therefore
+kCV will produce a low variance than LOOCV but higher bias (less training data used).\\
+
+A good var-bias balance is found around k=5 and k=10, and cleaner to use a multipe of the n as k.
+K fold is the main method to compare different models looking for the the bottom of the error over the
+different models.
+
+\subsection{Bootstrap}
+
+
 
 %----------------------------------------------------------------------------------------
 %	FIGURE EXAMPLE
