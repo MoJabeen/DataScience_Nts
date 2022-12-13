@@ -65,6 +65,14 @@ There is no response/outcome variable, ie clustering.\\
 
 \textbf{Semi supervised learning:} some response variables.
 
+\subsection{What is RSS?}
+
+Resiudal sum of squares is minimised in regression to calculate the parameters.
+
+\begin{equation}
+	RSS = (y_1-\beta_0-\beta_1x_1)^2 + \cdots +(y_n-\beta_0-\beta_1x_n)^2
+\end{equation}
+
 \section{Quality of fit}
 
 Measure how well the model fits the the true model.
@@ -75,6 +83,10 @@ Regression compares the predicted outcome to the true value and measures the MSE
 statistical methods minimise the \textbf{training} MSE, therefore a test MSE should be used!\\
 
 If there is a small training MSE and a large test MSE this can indicate overfitting.
+
+\begin{equation}
+	MSE = \frac{1}{n}\sum^n_{i=1}{(y_i-\hat{f}(x_i))^2}
+\end{equation}
 
 \subsection{What is Bias Variance Trade off?}
 
@@ -421,6 +433,128 @@ different models.
 
 \subsection{Bootstrap}
 
+Bootstrapping involves altering the orginal data set to make estimates on the accuracy of the data.
+An example of bootstrapping is randomly duplicating and replacing observations throughout the data set
+to get new data to train and validate on. Other types include "Smooth sampling" zero centered (mean) 
+adding noise to noraml dist data. \\
+
+This can be applied to a wide range of statistical methods, especially useful for models whos variance
+is difficult to measure.
+
+\section{Regularisation}
+
+If the number of predictors is greater than the number of observations, least square method cannot be 
+used, it will produce incorrect results.
+
+Irrelevant predictors will lead to unwanted complexity in the model and wasteful computation, the following are methods
+to reduce the number of predictors.\\
+
+Methods below normally assume linear regression is being used and therefore RSS is being minimised.
+
+\begin{enumerate}
+	\item Subset: Choose a subset of predictors.
+	\item Shrinkage (Normalisation): Set some parameters to 0.
+	\item Dimension reduction: Project p onto M space.
+\end{enumerate}
+
+\subsection{How do you use subsets?}
+
+Compare all possible combination of predictors (\(2^p\)). 
+Choose the best in terms of RSS or \(R^2\) for each set number of predictors.
+Choose the best overall with AIC, BIC or adjusted \(R^2\).
+
+\subsubsection{How does it work with logistic regression?}
+
+Use deivance instead of RSS, which is the -2* maximum log liklehood.
+
+\begin{equation}
+	D_{M} = -2 \log (L_M)
+\end{equation}
+
+\(L_M\) : Max achievevale liklehood.
+
+\subsection{How do you pefrom step wise subset ?}
+
+Add one predictor on every iteration, each time trying all possible predictor combination for that
+set number of predictors. Then based on the previous best add another predictor. \\
+
+When comparing two models with the same number of predictors can use \(R^2\) or RSS, however differing
+predictor number AIC,BIC or adjusted \(R^2\) should be used.
+
+\subsubsection{What is the pros/cons to this method?}
+
+Reduce the iterations to p(1+p)/2. The con is possibly missing different combinations that together
+produce a better model than working in the best approach method.\\
+
+To combat this backward stepwise can be used aswell as some hybrid methods that allow better scoping of
+possible combinations.
+
+\subsection{How do you compare test error for different models?}
+
+Two methods: Adjust training data to remove bias or use cross validation.\\
+
+How to determine the error parameter to compare:
+
+\begin{itemize}
+	\item \(C_p\)
+	\item Alkaline Information Criterion (AIC)
+	\item Bayesian Information Criterion (BIC)
+	\item \(R^2\)
+\end{itemize}
+
+\begin{equation}
+	C_p = \frac{1}{n}(RSS+2d\sigma^2);\; d:predictors
+\end{equation}
+
+This adds a penatlty of 2d var to the RSS error. For least squares AIC is porportinal to Cp.
+
+\begin{equation}
+	AIC = \frac{1}{n\sigma^2}(RSS+2d\sigma^2)
+\end{equation}
+
+\begin{equation}
+	BIC = \frac{1}{n}(RSS + log(n)d\sigma^2)
+\end{equation}
+
+BIC provides a larger pentaly for more predictprs as when n>7 log(n) >2.
+
+\begin{equation}
+	Adjusted\; R^2 = 1 - \frac{RSS/(n-d-1)}{TSS/(n-1)}
+\end{equation}
+
+\begin{equation}
+	TSS = \sum{(y_i - \bar{y})^2}
+\end{equation}
+
+Balances RSS by increasing the denominator in terms of the number of predictors, ensuring
+the number of predictors provides enough benefit in RSS to make it worth it.
+
+\subsection{How does cross validation compare?}
+
+Cross validation does not assume any model form and so is preffered in comparing models.
+
+\subsection{What is the one standard error rule?}
+
+Choose the lowest predictor error score in a cross validation which is within one standard error (of the MSE for each model)
+of the lowest CV error.
+
+\subsection{What is Shrinkage?}
+
+Reduce the parameters of the model, two methods: Ridge regression and LASSO.
+
+\subsubsection{What is ridge regression}
+
+Adds a penalty to the standard RSS, to push during the minimisation the parameters towards 0.
+
+\begin{equation}
+	RSS + \lambda \sum^p_{j=1}{\beta^2_j}
+\end{equation}
+
+\(\lambda =0\) : no effect\\
+\(\lambda ->\infty \) : Impact grows\\
+\(\beta_0 = \bar{y},x_i=0\) 
+
+\subsubsection{How is ridge regression effected by scaling?}
 
 
 %----------------------------------------------------------------------------------------
