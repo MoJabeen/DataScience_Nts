@@ -538,11 +538,11 @@ Cross validation does not assume any model form and so is preffered in comparing
 Choose the lowest predictor error score in a cross validation which is within one standard error (of the MSE for each model)
 of the lowest CV error.
 
-\subsection{What is Shrinkage?}
+\section{Shrinkage?}
 
 Reduce the parameters of the model, two methods: Ridge regression and LASSO.
 
-\subsubsection{What is ridge regression}
+\subsection{Ridge regression}
 
 Adds a penalty to the standard RSS, to push during the minimisation the parameters towards 0.
 
@@ -555,6 +555,312 @@ Adds a penalty to the standard RSS, to push during the minimisation the paramete
 \(\beta_0 = \bar{y},x_i=0\) 
 
 \subsubsection{How is ridge regression effected by scaling?}
+
+As scaling will directlt effect the penalty value (unlike standard linear regression), therefore
+predictors should be standardised to the same unit before applying ridge regression.
+
+\subsubsection{How does the penalty effect bias variance trade off?}
+
+As \(\lambda\) increases the bias will also increase and variance will decrease. However, there
+is a balancing point up to which there is not much impact on bias.
+
+\subsubsection{In non linear settings how are vectors compared?}
+
+\(l_2\) (ell-2) is used to compare vectors and is a measured of vector from 0.
+
+\begin{equation}
+	||\beta||_2=\sqrt{\sum^p_{j=1}{\beta_j^2}}
+\end{equation}
+
+Can be used to compare ridge parameters vs standard LSE parameters.
+
+\subsection{LASSO}
+
+Ridge regression does not set any of the values to 0, instead they tend toward 0. LASSO uses
+a slightly different penalty that allows for parameters to become 0, allowing variable selection.
+
+\subsubsection{What is the penalty?}
+
+\begin{equation}
+	RSS + \sum{|\beta_j|}
+\end{equation}
+
+\subsubsection{How are the regularisation methods shown in a constraint form?}
+
+\textbf{LASSO:}
+\begin{equation}
+	minimise_{\beta}(RSS)\;\;\;\; subject\; to\; \sum^p_{j=1}{|\beta_j|} \leq s
+\end{equation}
+
+\textbf{Ridge Regression:}
+\begin{equation}
+	minimise_{\beta}(RSS)\;\;\;\; subject\; to\; \sum^p_{j=1}{\beta_j^2} \leq s
+\end{equation}
+
+\textbf{Subset:}
+\begin{equation}
+	minimise_{\beta}(RSS)\;\;\;\; subject\; to\; \sum^p_{j=1}{I(\beta_j\neq 0)} \leq s
+\end{equation}
+
+\subsubsection{How does graphing shows the interaction of the constraints?}
+
+\begin{figure}[h] % [h] forces the figure to be output where it is defined in the code (it suppresses floating)
+	\centering
+	\includegraphics[width=\columnwidth]{ridge vs lasso.jpeg} % Example image
+	\caption{ridge vs lasso; p=2, elipses are constant RSS vals}
+\end{figure}
+
+\subsubsection{How does ridge compare to lasso?}
+
+Ridge should be used if all predictors truly relate to the outcome, otherwise lasso is the best bet.\\
+
+Cross validation should be used to calculate the best lambda and compare ridge and lasso solutions.
+
+\subsection{Dimension reduction?}
+
+Projection of p predictors to M where M<p:\\
+
+Below are the vectors Z which is X predictors linearly combined to create M predictors.
+\begin{equation}
+	Z_m = \sum^p_{j=1}{\phi_{jm}X_j}
+\end{equation}
+
+Theta combined with phi for M results in the beta parameters. Giving a smaller M parameters, due to this
+mapping all M paramters are combined with a specific phi set of values to give the orginal parameter.
+\begin{equation}
+	y_i= \theta_0 + \sum^M_{m=1}{\theta_mz_{im}}
+\end{equation}
+\begin{equation}
+	\beta_j = \sum^M_{m=1}{\phi_{jm}\theta_m}
+\end{equation}
+
+Reducing the dimensions will reduce the variance, and can avoid overfitting as it is a concentration
+of the data.
+
+\subsubsection{What is principal component analysis?}
+
+The first principle component is the line which if the points were projected onto would give the
+most variance (ie distance from points to line). To confine this we use the contraint 
+\(\phi_{11}^2 + \phi_{21}^2 =1; (\phi_{jm})\).\\
+
+The second principal has max variance but is also uncorrelated to the first pc, and therefore will
+be perpindicular to it.
+
+\subsubsection{What is principal components regression approach?}
+
+Determine the first M Z principal components and uses them as predictors for a regression line.
+The idea is that most of the relationship with the response is in the first few principal components.\\
+
+Or the direction in which the observations show the most variation is directions assocaited with the response,
+which is what the principle components are.\\
+
+If this is true dimension reduction will produce a less overfit model which peforms better. Reccomended
+to standardise the variables onto the same scale, as it will effect the variance between predictors.
+
+\subsection{What to do in high dimensional problems (p>>n)?}
+
+Things to be aware of:
+
+\begin{itemize}
+	\item Dimnesional model comparison isnt effective (AIC,BIC,\(R^2\))
+	\item Careful of collinearity, where removing predictors is difficult due to thier linear relationship.
+\end{itemize}
+
+\section{Non linear regression}
+
+5 main methods:
+
+\begin{enumerate}
+	\item \textbf{Polynomial regression:} Add extra predictors by raising each by a power
+	\item \textbf{Step functions:} Split the range of a variable into sections making it a classification problem
+	\item \textbf{Regression splines:} Divide into sections, fit a polynomial that is constrained to be smooth
+	at the boundary.
+	\item \textbf{Smoothing splines:} Use residual sum of squares subject to a smoothness penalty similar to regression splines.
+	\item \textbf{Local regression:} Allows splines to overlap at the boundaries in a smooth way.
+	\item \textbf{Generalised additive models:} Extend methods to deal with more predictors.
+\end{enumerate}
+
+\subsection{Generalised additive Models}
+
+Create additive non linear model for p predictors.\\
+
+For regression:
+
+\begin{equation}
+	y = \beta_0 + x_{i1}\beta_1 + x_{i2}\beta_2
+\end{equation}
+
+Can be transformed to:
+
+\begin{equation}
+	y = \beta_0 + f(x_{i1}) + f(x_{i2})
+\end{equation}
+
+In which each function is its own model for that predictor.\\
+
+For classifcation:
+
+\begin{equation}
+	log\frac{p(x)}{1-p(x)} = \beta_0 + f(x_{i1}) ... + f(x_{ip})
+\end{equation}
+
+\subsubsection{What is backfitting?}
+
+For some methods its not as simple as adding the models, in which case backfitting is used.
+Combines models by updating the fit for each predictor in turn keeping the others fixed.
+
+\subsubsection{What is the con of GAMs?}
+
+As it is additive the interaction between predictors can be lost, but can mitigate this by adding
+combined function predictors ie f(\(x_{i1},x_{i2}\)).
+
+\section{Tree based methods}
+
+The idea behind tree based methods is to segement the observations, with rules that can be summerised
+as a tree. \\
+
+Simple tree methods dont compare well in terms of accuracy to other modelling methods, however, are easy
+to visualise and use for inference.\\
+
+To improve predictive performance can use multiple tree together; bagging, random forests and boosting
+are examples of this.
+
+\subsection{How do trees work?}
+
+Splitting the observations into sections based on the predictor values, this can be done by stepping
+through each predictor.
+
+\begin{figure}[h] % [h] forces the figure to be output where it is defined in the code (it suppresses floating)
+	\centering
+	\includegraphics[width=\columnwidth]{Tree example.jpeg} % Example image
+	\caption{Tree split example}
+\end{figure}
+
+The mean in each section is often used as the default response, if the observation lies in that section.
+It can also be used for inference.
+
+\subsection{How to determine the regions?}
+
+A possible method is minimising the RSS from the mean value of each region:
+
+\begin{equation}
+	\sum^J_{j=1}\sum_{i\epsilon R_j}{(y_i-\hat{y}_{Rj})}^2
+\end{equation}
+
+J: is the region.\\
+\(\hat{y}_{R_j}\): is the mean of the region.
+
+\subsection{What is top down greedy approach recursive binary splitting?}
+
+Working from the top of the tree splitting into two for each predictor, greedy as it does not
+look ahead only works step by step. Until a stopping criterion is reached ie each region will have
+n>5. This could lead to overfitting of the tree.
+
+\subsection{When should the splitting stop?}
+
+An alternative is to split until the a chosen RSS value. But a better method is to let the full 
+tree be created and then work through the tree subsets comparing each other in terms of error rate.
+
+\subsection{How can you limit the number of subsets compared?}
+
+\textbf{Pruning} allows a selection of the subset via penaltys added to the minimisation:
+
+\begin{equation}
+	\sum^{|T|}_{m=1}\sum_{i\epsilon R_m}{(y_i-\hat{y}_{Rm})}^2 + \alpha|T| 
+\end{equation}
+
+T: Number of terminal nodes on the tree.\\
+
+Similar to LASSO this will allowing reduce the number of terminal nodes, alpha is chosen via cross
+validation.
+
+\subsection{How is it used with Classification?}
+
+Use the most commonly occuring class in the region as the default response. And use error rate
+instead of RSS to choose regions.
+
+\begin{equation}
+	E = 1-max_k(\hat{p}_{mk})
+\end{equation}
+
+\(\hat{p}_{mk}\): Portion of training observations in the mth region that from the kth class.
+
+\subsubsection{Alternatives to using error rate?}
+
+Error rate can be not sensitive enough so Gini Index is used:
+
+\begin{equation}
+	G = \sum^k_1{\hat{p}_{mk}(1-\hat{p}_{mk})}
+\end{equation}
+
+Gini index will take a small value if the p value is close to 0 or 1 and therefore kind of shows
+node purity in that the when the porportion of the class is very low or high Gini is low.
+
+Can also use cross entropy function which is similar.
+
+\subsection{What are pros/cons?}
+
+Pros:
+\begin{itemize}
+	\item Easy to explain
+	\item Easy to display
+	\item Easily handles qualitative (easy dummy values as a split)
+\end{itemize}
+
+Cons:
+\begin{itemize}
+	\item Poor predictive accuracy
+\end{itemize}
+
+If the relationship is highly non linear and complex trees maybe the preffered model.
+
+\subsection{What is bagging?}
+
+Bootstrapping or bagging reduces the variance of a model, combining the averages of observations sets
+will give a lower variance than each set.
+
+So using bootstrapped models and aggregating them will achieve a lower variance.
+
+\subsubsection{What is out of bag?}
+
+If during the bootstrap a model uses 2/3 of the observations, the other 1/3 is OOB. This is used
+as the test set and if any other model has the same OOB the error is aggregated.
+
+This can be used with subset selection methods to get better trees to combine via bootstrapping.
+
+\subsection{What are Random forests?}
+
+The trees are decorrelated and combined just as in bagging. Ensuring the trees when combined have a
+mixed structure is done by randomly selecting a sample of m predictors to build the tree. m is often
+the square root of p.
+
+\subsection{What is Boosting?}
+
+Similar to bagging but sequential. Calculate tree, add factor of tree to overall function, take away
+response from that model from the residuals (shown below):
+
+Fraction addition of model, where r the residuals are used as the response:
+\begin{equation}
+	\hat{f}(x) += \lambda \hat{f}^b(x)
+\end{equation}
+
+Update the residuals:
+\begin{equation}
+	r_i -= \lambda \hat{f}^b(x_i)
+\end{equation}
+
+Final model:
+\begin{equation}
+	\hat{f}(x) = \sum^B_{b=1}{\lambda\hat{f}^b(x)}
+\end{equation}
+
+\(\lambda\): Shrinkage parameter, controls the speed of learning.\\
+B: number of tree models created.\\
+
+Due to the learning process increasing B does not cause overfitting.
+
+\section{Support Vector Machines}
+
 
 
 %----------------------------------------------------------------------------------------
