@@ -861,8 +861,137 @@ Due to the learning process increasing B does not cause overfitting.
 
 \section{Support Vector Machines}
 
+One of the best out of the box classifiers, intended for binary class cases.
 
+\subsection{What is the hyperplane?}
 
+In p dimensional space, plane is p-1 subspace. Ie in 3 dimensional space the plane is flat.
+
+\begin{equation}
+	\beta_0 + \beta_1X_1 + \beta_2X_2 + \cdots \beta_pX_p = 0
+\end{equation}
+
+\begin{equation}
+	X = (X_1,X_2,\cdots X_p)^T
+\end{equation}
+
+A point that satisfies the above two equation lies on the hyperplane. The hyperplane cuts the space
+in half about 0, can determine on which side of the hyperplane the point is by using the equation.\\
+
+Also shows the certainty of the response based on the distance from the hyperplane boundary.
+
+\subsection{What is the maximal margin classifier?}
+
+The minimum perpendicular distance from all observations to the plane (the margin), is maximised. Support vectors
+are the points that the hyperplane relies on and used to determine the margin (the closest points).
+
+\begin{equation}
+	y_i(\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\cdots \beta_px_{ip}) \geq M
+\end{equation}
+
+M: Instead of being 0, adds a cushion for the decision boundary, this is also the margin.\\
+
+The margin (perp distance to hyperplane) is given by:
+
+\begin{equation}
+	y_i(\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\cdots \beta_px_{ip})
+\end{equation}
+
+\subsection{What if there is no perfect hyperplane?}
+
+In many cases cannot maximise M>0, as there is no hyperplane perfectly separating the two.
+In this case a soft margin is used, which almost completely separates the observations, this
+is called the \textbf{support vector classifier}.\\
+
+Furthermore, in many cases even if there exists a perfect solution the variance will be very high
+as a single observation could change the hyperplane.
+
+\subsection{What is the support vector classifier?}
+
+Maximise M:
+
+\begin{equation}
+	y_i(\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\cdots \beta_px_{ip}) \geq M(1-\epsilon_i)
+\end{equation}
+
+\begin{equation}
+	\epsilon_i \geq 0,\; \sum \epsilon_i \leq C
+\end{equation}
+
+C: Non negative tuning parameter\\
+\(\epsilon\): Slack variable \\
+
+This allows the support vectors to have a distance less than the margin, depending on epsilon and
+C. If \(\epsilon>0\) the point is on the wrong side of the margin if \(\epsilon>1\) its on the wrong
+side of the hyperplane. C determines the severity of the violations, controlling the bias-var
+trade off and is chosen via cross validation.\\
+
+\textbf{Support vector classifiers are not effected by outliers!}
+
+\subsection{How do you make the plane non linear?}
+
+Could use added predictor polynomials to make it non linear but instead the general method is to
+use kernals in the support vector machine.
+
+\subsection{What is the support vector machine?}
+
+Focusing on only the support vectors (S) and using inner products (which is used to solve the
+support vector classifier) gives the classifier as:
+
+\begin{equation}
+	f(x) = \beta_0 + \sum_{i\epsilon S}{\alpha_i\sum^p_{j=1}{x_{ij}x_{i'j}}}
+\end{equation}
+
+Can then generalise the inner product of points to be function (kernal):
+
+\begin{equation}
+	K\{x_i,x_{i'}\}
+\end{equation}
+
+Linear kernal version:
+\begin{equation}
+	K : \sum{x_ix_{i'}}
+\end{equation}
+
+Polynomial kernal version:
+\begin{equation}
+	K: (1+ \sum{x_ix_{i'}})^d;\; d:Dimensions
+\end{equation}
+
+Other kernal options exist ie, radial kernal.
+
+\textbf{Use ROC curve to compare SVM and LDA.}
+
+\subsection{What if the number of classes is >2?}
+
+Use one versus one classifcation, create pairs of classes for all possible combinations and run
+all SVMs choosing the highest shown class.\\
+
+One versus all classifcation, one class vs the rest to check with certainty if the observation belongs
+to the chosen class.
+
+\subsection{Show SVC in loss penalty form}
+
+Fitting the support vector classifier \(f(x_i) = (\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\cdots \beta_px_{ip})\):
+\begin{equation}
+	minimise({\sum^n_{i=1}{max(0,1-y_if(x_i))+\lambda\sum^p_{j=1}{\beta^2_j}}})
+\end{equation}
+
+\(\lambda\) acts like C as the penalty term. Can directly compare this form to other methods, which are
+made of loss functions and penalty terms, known as hinge loss.
+
+\subsection{How does logitisic and SVM compare?}
+
+If the classifiers are clearly seperated SVM is preffered, in overlapping regions logitisic regression is good.\\
+
+Can also use kernal methods in other classifiers.
+
+\subsection{What about Support vector regression?}
+
+The margin is setup so that absoulte values greater than a constant contribute to the loss to determine
+the parameters.\\
+
+\textbf{TODO: ADD MORE INFO}
 %----------------------------------------------------------------------------------------
 %	FIGURE EXAMPLE
 %----------------------------------------------------------------------------------------
