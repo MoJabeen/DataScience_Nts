@@ -11,7 +11,7 @@
 \title{	
 	\normalfont\normalsize
 	\vspace{20pt} % Whitespace
-	{\huge Intro To Statistical Learning: Notes}\\ % The meh
+	{\huge Statistical Learning: Notes}\\ % The meh
 	\vspace{12pt} % Whitespace
 	\rule{\linewidth}{2pt}\\ % Thick bottom horizontal rule
 }
@@ -24,15 +24,23 @@
 
 \maketitle % Print the title
 
+\tableofcontents
+
+\newpage
+
+\section{Sources}
+
+The main source for the information below and the figures is the book \textit{An Introduction to Statistical Learning} \cite{james2013introduction}.
+
 \section{General}
 
-Statsictal is learning is based on making predictions or inferences on data inputs. Via approximating f(x),
+Statistical is learning is based on making predictions or inferences on data inputs. Via approximating f(x),
 where y = f(x) + error.
 
 \subsection{What are the types of statistical problems?}
 
 \begin{itemize}
-	\item Regression: Determine outcome variable based on predictors, continous problem ie Range of values 
+	\item Regression: Determine outcome variable based on predictors, continuos problem ie Range of values 
 	\item Classification: Discrete choice of answers (normally qualitative)
 	\item Clustering: Determine similar groups of data (no natural output variable)
 \end{itemize}
@@ -48,13 +56,13 @@ where y = f(x) + error.
 
 i is the observation and j is the predictor.
 
-\subsection{What is paramtric and non parametric?}
+\subsection{What is parametric and non parametric?}
 
 \textbf{Parametric:} Assume form of the desired function and calculate parameters based on the assumption.\\
 
 \textbf{Non Parametric:} Do not make any explicit assumptions, instead fit function best to the data given.\\
 
-Choosing an non parametric avoids the problem of having a function form very differnt to reality however opens up
+Choosing an non parametric avoids the problem of having a function form very different to reality however opens up
 the possibility of overfitting (following noise too closely) and needs more data for an accurate form.\\
 
 Furthermore, if the main goal is inference, restrictive (parametric) are much easier to interpret.
@@ -67,7 +75,7 @@ There is no response/outcome variable, ie clustering.\\
 
 \subsection{What is RSS?}
 
-Resiudal sum of squares is minimised in regression to calculate the parameters.
+Residual sum of squares is minimised in regression to calculate the parameters.
 
 \begin{equation}
 	RSS = (y_1-\beta_0-\beta_1x_1)^2 + \cdots +(y_n-\beta_0-\beta_1x_n)^2
@@ -99,11 +107,11 @@ and variance of error.
 
 Aim is to minimise variance and bias as error can not be removed.
 
-The rate of change between var and bias determines optimal flexibilty of a model.
+The rate of change between var and bias determines optimal flexibility of a model.
 
 \subsubsection{What is variance?}
 
-The change in outcome/model if the data set is changed. Higher flexibilty of model often increases
+The change in outcome/model if the data set is changed. Higher flexibility of model often increases
 this.
 
 \subsubsection{What is bias?}
@@ -113,7 +121,7 @@ Error from approximations.
 \subsection{Error Rate}
 
 Classification accuracy is measured by error rate, the frequency of values that predicted the wrong class. In this
-case test error rate is also preffered.
+case test error rate is also preferred.
 
 \begin{equation}
 	Error\; rate = \frac{1}{n} \sum{I(y_i \neq \hat{y_i})} , I: y_i \neq \hat{y_i} ? 1:0
@@ -121,7 +129,7 @@ case test error rate is also preffered.
 
 \subsection{What is Bayes Classification?}
 
-Choosing the max probablilty an observation is a class will minimise the error rate.
+Choosing the max probability an observation is a class will minimise the error rate.
 
 Ie if there are only two classes, choose the class that fits:
 \begin{equation}
@@ -134,27 +142,130 @@ Ie if there are only two classes, choose the class that fits:
 	Bayes\; Error\; Rate = 1 - E(maxP(Y=j|X=x_o))
 \end{equation}
 
-E is the average for all values of X. ie if the probablilty of a 2 class, setup where one class is 0.7 the error rate
-will be 0.3. Not possible to actually use Bayes as the probablilty is unknown, however, this is the gold standard.
+E is the average for all values of X. ie if the probability of a 2 class, setup where one class is 0.7 the error rate
+will be 0.3. Not possible to actually use Bayes as the probability is unknown, however, this is the gold standard.
+
+\subsection{What is residual standard error?}
+
+Variance is often unknown (population) and therefore RSE is used:
+
+\begin{equation}
+	RSE = \sqrt{\frac{RSS}{n-2}}
+\end{equation}
+
+Multiple predictors:
+
+\begin{equation}
+	RSE = \sqrt{\frac{RSS}{(n-p-1)}}
+\end{equation}
+
+\subsection{Hypothesis tests for multiple variables?}
+
+The F stat:
+
+\begin{equation}
+	F=\frac{(TSS-RSS)/p}{RSS/(n-p-1)}
+\end{equation}
+
+Methods that account for all predictors such as the F stat should be used instead of individual
+stats for each variable inferred from collectively as this will be less accurate.
+
+\subsection{What is the interaction effect?}
+
+When predictors have links or synergies between them and therefore an additive method using a single
+to represent each predictor individually is not accurate.\\
+
+Should then use combined parameters:
+\begin{equation}
+	y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \beta_3x_1x_2
+\end{equation}
+
+\(\beta_3\) is the effect on x1 for one unit change of x2 or vice versa.
+
+\subsubsection{What is the hierarchy principal?}
+
+If an interaction is included, the individuals should also be.
+
+\subsection{Which assumptions can be problematic?}
+
+\subsubsection{Uncorrelated error terms}
+
+If the error terms are correlated, stats will be less accurate. RSE will increase (more variation in results)
+and confidence intervals will be lower.\\
+
+Checking for correlation can be done visually by plotting the residual terms, if there tracking in the residuals
+(adjacent values are similar) this is a sign of correlation.
+
+\subsubsection{Variance of terms}
+
+Can check for heteroscedasticity by plotting residuals and observing the spread. Can reduce the spread
+via transformation ie log or sqrt. Can also use weighted methods to counteract the changing var.
+
+\subsubsection{Outliers}
+
+Outliers are unexpected values in the response, given an observation within the normal range. These have less
+of an effect on the models fit but do effect the stats used for checking model accuracy ie RSE or \(R^2\).
+
+Check for outliers by plotting studentised residuals:
+
+\begin{equation}
+	SR = \frac{e}{std}	
+\end{equation}
+
+If the SR is > 3 possible the value is an outlier.
+
+\subsection{High leverage points}
+
+If the observation is unusual it is considered a high leverage point, and can have significantly bigger impact
+on the model than outliers.\\
+
+With multiple predictors it is possible to have each individual predictor in the standard range, but the overall set
+of predictors to be unusual. This is hard to spot, can use leverage stat.\\
+
+For linear regression:
+\begin{equation}
+	h_i = \frac{1}{n} + \frac{(x_i-\bar{x})^2}{\sum{(x_i-\bar{x})^2}}
+\end{equation}
+
+\subsubsection{Collinearity}
+
+When predictors are closely related to each other the accuracy of the coefficients will decrease increasing
+the standard error, therefore effecting hypothesis tests.\\
+
+For 2 predictors can check using a correlation matrix, above that when there is multicollinearity use 
+Variance Inflation Factor (VIF).
+
+\begin{equation}
+	VIF = \frac{1}{1 - R^2_{X_j|X_{-j}}}
+\end{equation}
+
+\(R^2_{X_j|X_{-j}}\) is the R squared if Xj was the response and the other predictors are used to predict.\\
+
+Possible fix it to drop linear terms or combine them.
 
 \section{Classification}
 
 \subsection{What is K nearest neighbours?}
 
-KNN identifies the K points closest to training point x, shown as \(\eta_o\). The conditional probablilty is then
+KNN identifies the K points closest to training point x, shown as \(\eta_o\). The conditional probability is then
 the fraction of the points in \(\eta_o\) that equal class j.
 
 \begin{equation}
 	P(Y=j|X=X_o) = \frac{1}{K}\sum_{i\epsilon \eta_o}{I(y_i=j)}
 \end{equation}
 
-Then classify point x as the class with the highest probablilty. K =1 has low bias but high variance.
+Then classify point x as the class with the highest probability. K =1 has low bias but high variance.
+
+\subsection{What if there is high dimensions?}
+
+KNN performs worse if p << n due to the lack of neighbours. Generally parametric methods are preferred if
+few observations per predictor.
 
 \subsection{Why logistic regression instead of linear regression?}
 
 To create a regression problem from a classification, you would be forced to create some type of ordering of the qualitative
 variables if >2. This ordering may not be true for the data set. However with a binary classification least squares is possible, the
-issue is that least squares does not have the required boundaries for a binary decison ie 0-1 so you would create a useless areas.
+issue is that least squares does not have the required boundaries for a binary decision ie 0-1 so you would create a useless areas.
 
 \subsection{What is logistic regression?}
 
@@ -175,14 +286,14 @@ This will produce an S curve, and if the log is taken shows that 1 unit increase
 	log\; odds: ln(\frac{p(X)}{1-p(X)}) = \beta_0 + \beta_1X
 \end{equation}
 
-This also shows that if \(\beta_1\) is postive, increasing X will increase p(X), if negative the increasing X will
+This also shows that if \(\beta_1\) is positive, increasing X will increase p(X), if negative the increasing X will
 decrease p(X).
 
 \subsection{How is logistic regression used?}
 
-For binary class scenarios you are trying to maximise the liklehood function to estimate the beta parameters.
+For binary class scenarios you are trying to maximise the likelihood function to estimate the beta parameters.
 
-Likelhood function:
+Likelihood function:
 \begin{equation}
 	(\beta_o,\beta_1) = \Pi_{i:Y_i=1}p(x_i) + \Pi_{i:Y_i=0}(1-p(x_i))
 \end{equation}
@@ -196,7 +307,7 @@ Likelhood function:
 
 \ref{normalSE} shows for each sample expect \(\alpha\) to very by x on average.
 
-The below is the standard erorr of the mean ie std/n:
+The below is the standard error of the mean ie std/n:
 
 \begin{equation}
 	SE(\mu)^2 = \frac{\sigma^2}{n}
@@ -225,14 +336,14 @@ The null hypothesis is that there is no relationship between predictor and outco
 If there is qualitative category for the observational data, this can be used a dummy value which is used to represent
 the observations. This then requires new parameters to be calculated.\\
 
-I.e. set \(x_i\) as 1 if male, 0 if female. If more than one category use multiple pairs as preidctors, ie 
-\(x_{i1} = X==Asian?1:0, x_{i2} = X==Jamican?1:0\).\\
+I.e. set \(x_i\) as 1 if male, 0 if female. If more than one category use multiple pairs as predictors, ie 
+\(x_{i1} = X==Asian?1:0, x_{i2} = X==Jamaican?1:0\).\\
 
 These parameters from this can be validated in the same way.
 
 \subsection{How do you include multiple predictors in logistic regression?}
 
-Match the number of preidctors to the number of parameters:
+Match the number of predictors to the number of parameters:
 
 \begin{equation}
 	\ln\frac{p(x)}{1-p(x)} = \beta_o + \beta_1x_{i1} + \beta_2x_{i2} + \cdots \beta_px_{ip}
@@ -245,12 +356,12 @@ Multi-class logistic regression exists but is not really used.
 
 \subsection{What is linear discriminant analysis?}
 
-Model X for each class Y as a distribution, then use Bayes therom and compare all dist to choose the max P(Y=k|X=x).
+Model X for each class Y as a distribution, then use Bayes theorem and compare all dist to choose the max P(Y=k|X=x).
 \textbf{Assumes normal distribution for each class.}
 
 \subsubsection{LDA Equation}
 
-\(\Pi_k\) : Probablilty of the randomly chosen observation X being in class K. (Fraction of observations that belong to the kth class)\\
+\(\Pi_k\) : Probability of the randomly chosen observation X being in class K. (Fraction of observations that belong to the kth class)\\
 
 \(f_k(X)\): Density function for X belonging to class K.
 
@@ -269,7 +380,7 @@ The focus is estimating f(x) to fit Bayes Classifier. A point on the density fun
 	\delta_k(x) = x\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2}
 \end{equation}
 
-Calcuating the above may not be possible as the population is not available so estimates of mean and std are used:
+Calculating the above may not be possible as the population is not available so estimates of mean and std are used:
 
 \begin{equation}
 	\hat{\mu_k} = \frac{1}{n_k}\sum_{i:y_i=k}{x_i}
@@ -288,7 +399,7 @@ These are then plugged in to give the boundary points as:
 	\hat{\delta_k(x)} = x\frac{\hat{\mu_k}}{\hat{\sigma^2}} - \frac{\hat{\mu_k}^2}{2\hat{\sigma^2}}
 \end{equation}
 
-If possible compare to Bayes error rate to determine classifier peformance.
+If possible compare to Bayes error rate to determine classifier performance.
 
 \subsubsection{What if the number of predictors > 1?}
 
@@ -329,64 +440,64 @@ each class.\\
 Sensitivity: Sensitivity is the percentage of true positives (e.g. 90\% sensitivity = 90\% of people who have the target disease will test positive)\\
 Specificity: Specificity is the percentage of true negatives (e.g. 90\% specificity = 90\% of people who do not have the target disease will test negative).
 
-\subsection{How to accomdate non equal classes?}
+\subsection{How to accommodate non equal classes?}
 
 If the bias between classes is not equal the boundary can be altered to instead of being the max,
 match the criteria of the problem.
 
 \subsection{What is ROC curve?}
 
-Shows the error rate using different thresholds, the overall peformance of the model is the
+Shows the error rate using different thresholds, the overall performance of the model is the
 area under the curve.\\
 
 If area under the curve is <=0.5 its assumed the performance is no better than chance.
 
-\subsection{Different classification measurments}
+\subsection{Different classification measurements}
 
 \begin{figure}[h] % [h] forces the figure to be output where it is defined in the code (it suppresses floating)
 	\centering
 	\includegraphics[width=\columnwidth]{classifcation table.jpeg} % Example image
-	\caption{Types of classification measurments}
+	\caption{Types of classification measurements}
 \end{figure}
 
-\subsection{Quadratic Discrimanant Analysis}
+\subsection{Quadratic Discriminant Analysis}
 
-The main differnce to LDA is that there is not an assumption of common variance between distribution,
+The main difference to LDA is that there is not an assumption of common variance between distribution,
 this leads to a quadratic boundary function. 
 
 \subsubsection{What are the pros/cons of QDA?}
 
-More flexiblie, accomdates differing class distributions and therefore has lower bias.\\
+More flexible, accommodates differing class distributions and therefore has lower bias.\\
 
 It is more compute intensive and has higher variance.
 
 \subsubsection{How do you choose between LDA and QDA?}
 
 Compare the correlation between class and observations for each class, if they are all similar shows
-the variance is likley similar. And thefore LDA is a good choice otherwise QDA is.
+the variance is likely similar. And therefore LDA is a good choice otherwise QDA is.
 
 \subsection{How do you choose between LDA and Logistic for binary scenarios?}
 
-Main differntial is that LDA assumes normal distribution of class, logistic does not.
+Main differential is that LDA assumes normal distribution of class, logistic does not.
 
 \subsection{Differences with KNN?}
 
-Descion boundaries cant be weigted towards classes, however it is the most flexible choice.
+Decision boundaries cant be weighted towards classes, however it is the most flexible choice.
 
 \subsection{Methods to improve non linear performance?}
 
-Can improve non linear peformance by adding transformed predictors, ie \(X_1^2,X_2^2\) etc.
+Can improve non linear performance by adding transformed predictors, ie \(X_1^2,X_2^2\) etc.
 
 \section{Resampling methods}
 
-Completley seperate data as the test set may not make sense to use as that could be used as
-a valuable method to train the orignial data set. So instead you can repeatadley draw samples
+Completely separate data as the test set may not make sense to use as that could be used as
+a valuable method to train the original data set. So instead you can repeatedly draw samples
 from the data set you have and refit the model and compare to other samples as test data to gain
 info about the models setup.\\
 
 \textbf{Model assessment:} Evaluating a models performance.
 
-\textbf{Model selection:} Determining a models flexibilty.\\
+\textbf{Model selection:} Determining a models flexibility.\\
 
 \textit{Side note: Can determine if a transformation is valid using hypothesis tests.}
 
@@ -395,7 +506,7 @@ info about the models setup.\\
 \subsubsection{What is the validation set approach?}
 
 Randomly divide the data into a training and test set. The issue is there will be less data used
-for training the model with each split, will most likley overestimate the test error.
+for training the model with each split, will most likely overestimate the test error.
 
 \subsubsection{What is leave one out cross valiation (LOOCV)?}
 
@@ -417,7 +528,7 @@ This is a very flexible method, however, does require large computation.
 
 \subsubsection{What is K fold cross validation?}
 
-Seperate into K sets, 1 set is the validation and the rest are used for training. Loop through switching
+Separate into K sets, 1 set is the validation and the rest are used for training. Loop through switching
 the validation set to each Kth set, taking the average across n sets as the error. 
 The main benefit is the computational costs.
 
@@ -427,18 +538,18 @@ LOOCV (K=n).\\
 The mean of many highly correlated samples has a higher variance than if uncorrelated. And therefore
 kCV will produce a low variance than LOOCV but higher bias (less training data used).\\
 
-A good var-bias balance is found around k=5 and k=10, and cleaner to use a multipe of the n as k.
+A good var-bias balance is found around k=5 and k=10, and cleaner to use a multiple of the n as k.
 K fold is the main method to compare different models looking for the the bottom of the error over the
 different models.
 
 \subsection{Bootstrap}
 
-Bootstrapping involves altering the orginal data set to make estimates on the accuracy of the data.
+Bootstrapping involves altering the original data set to make estimates on the accuracy of the data.
 An example of bootstrapping is randomly duplicating and replacing observations throughout the data set
-to get new data to train and validate on. Other types include "Smooth sampling" zero centered (mean) 
-adding noise to noraml dist data. \\
+to get new data to train and validate on. Other types include "Smooth sampling" zero centred (mean) 
+adding noise to normal dist data. \\
 
-This can be applied to a wide range of statistical methods, especially useful for models whos variance
+This can be applied to a wide range of statistical methods, especially useful for models whose variance
 is difficult to measure.
 
 \section{Regularisation}
@@ -465,15 +576,15 @@ Choose the best overall with AIC, BIC or adjusted \(R^2\).
 
 \subsubsection{How does it work with logistic regression?}
 
-Use deivance instead of RSS, which is the -2* maximum log liklehood.
+Use deviance instead of RSS, which is the -2* maximum log likelihood.
 
 \begin{equation}
 	D_{M} = -2 \log (L_M)
 \end{equation}
 
-\(L_M\) : Max achievevale liklehood.
+\(L_M\) : Max achievable likelihood.
 
-\subsection{How do you pefrom step wise subset ?}
+\subsection{How do you perform step wise subset ?}
 
 Add one predictor on every iteration, each time trying all possible predictor combination for that
 set number of predictors. Then based on the previous best add another predictor. \\
@@ -486,7 +597,7 @@ predictor number AIC,BIC or adjusted \(R^2\) should be used.
 Reduce the iterations to p(1+p)/2. The con is possibly missing different combinations that together
 produce a better model than working in the best approach method.\\
 
-To combat this backward stepwise can be used aswell as some hybrid methods that allow better scoping of
+To combat this backward stepwise can be used as well as some hybrid methods that allow better scoping of
 possible combinations.
 
 \subsection{How do you compare test error for different models?}
@@ -506,7 +617,7 @@ How to determine the error parameter to compare:
 	C_p = \frac{1}{n}(RSS+2d\sigma^2);\; d:predictors
 \end{equation}
 
-This adds a penatlty of 2d var to the RSS error. For least squares AIC is porportinal to Cp.
+This adds a penalty of 2d var to the RSS error. For least squares AIC is proportional to Cp.
 
 \begin{equation}
 	AIC = \frac{1}{n\sigma^2}(RSS+2d\sigma^2)
@@ -516,7 +627,7 @@ This adds a penatlty of 2d var to the RSS error. For least squares AIC is porpor
 	BIC = \frac{1}{n}(RSS + log(n)d\sigma^2)
 \end{equation}
 
-BIC provides a larger pentaly for more predictprs as when n>7 log(n) >2.
+BIC provides a larger penalty for more predictors as when n>7 log(n) >2.
 
 \begin{equation}
 	Adjusted\; R^2 = 1 - \frac{RSS/(n-d-1)}{TSS/(n-1)}
@@ -531,14 +642,14 @@ the number of predictors provides enough benefit in RSS to make it worth it.
 
 \subsection{How does cross validation compare?}
 
-Cross validation does not assume any model form and so is preffered in comparing models.
+Cross validation does not assume any model form and so is preferred in comparing models.
 
 \subsection{What is the one standard error rule?}
 
 Choose the lowest predictor error score in a cross validation which is within one standard error (of the MSE for each model)
 of the lowest CV error.
 
-\section{Shrinkage?}
+\section{Shrinkage}
 
 Reduce the parameters of the model, two methods: Ridge regression and LASSO.
 
@@ -556,7 +667,7 @@ Adds a penalty to the standard RSS, to push during the minimisation the paramete
 
 \subsubsection{How is ridge regression effected by scaling?}
 
-As scaling will directlt effect the penalty value (unlike standard linear regression), therefore
+As scaling will directly effect the penalty value (unlike standard linear regression), therefore
 predictors should be standardised to the same unit before applying ridge regression.
 
 \subsubsection{How does the penalty effect bias variance trade off?}
@@ -607,7 +718,7 @@ a slightly different penalty that allows for parameters to become 0, allowing va
 \begin{figure}[h] % [h] forces the figure to be output where it is defined in the code (it suppresses floating)
 	\centering
 	\includegraphics[width=\columnwidth]{ridge vs lasso.jpeg} % Example image
-	\caption{ridge vs lasso; p=2, elipses are constant RSS vals}
+	\caption{ridge vs lasso; p=2, ellipses are constant RSS vals}
 \end{figure}
 
 \subsubsection{How does ridge compare to lasso?}
@@ -626,7 +737,7 @@ Below are the vectors Z which is X predictors linearly combined to create M pred
 \end{equation}
 
 Theta combined with phi for M results in the beta parameters. Giving a smaller M parameters, due to this
-mapping all M paramters are combined with a specific phi set of values to give the orginal parameter.
+mapping all M parameters are combined with a specific phi set of values to give the original parameter.
 \begin{equation}
 	y_i= \theta_0 + \sum^M_{m=1}{\theta_mz_{im}}
 \end{equation}
@@ -640,21 +751,21 @@ of the data.
 \subsubsection{What is principal component analysis?}
 
 The first principle component is the line which if the points were projected onto would give the
-most variance (ie distance from points to line). To confine this we use the contraint 
+most variance (ie distance from points to line). To confine this we use the constraint 
 \(\phi_{11}^2 + \phi_{21}^2 =1; (\phi_{jm})\).\\
 
 The second principal has max variance but is also uncorrelated to the first pc, and therefore will
-be perpindicular to it.
+be perpendicular to it.
 
 \subsubsection{What is principal components regression approach?}
 
 Determine the first M Z principal components and uses them as predictors for a regression line.
 The idea is that most of the relationship with the response is in the first few principal components.\\
 
-Or the direction in which the observations show the most variation is directions assocaited with the response,
+Or the direction in which the observations show the most variation is directions associated with the response,
 which is what the principle components are.\\
 
-If this is true dimension reduction will produce a less overfit model which peforms better. Reccomended
+If this is true dimension reduction will produce a less overfit model which performs better. Recommended
 to standardise the variables onto the same scale, as it will effect the variance between predictors.
 
 \subsection{What to do in high dimensional problems (p>>n)?}
@@ -662,8 +773,8 @@ to standardise the variables onto the same scale, as it will effect the variance
 Things to be aware of:
 
 \begin{itemize}
-	\item Dimnesional model comparison isnt effective (AIC,BIC,\(R^2\))
-	\item Careful of collinearity, where removing predictors is difficult due to thier linear relationship.
+	\item Dimensional model comparison isn't effective (AIC,BIC,\(R^2\))
+	\item Careful of collinearity, where removing predictors is difficult due to their linear relationship.
 \end{itemize}
 
 \section{Non linear regression}
@@ -698,7 +809,7 @@ Can be transformed to:
 
 In which each function is its own model for that predictor.\\
 
-For classifcation:
+For classification:
 
 \begin{equation}
 	log\frac{p(x)}{1-p(x)} = \beta_0 + f(x_{i1}) ... + f(x_{ip})
@@ -716,10 +827,10 @@ combined function predictors ie f(\(x_{i1},x_{i2}\)).
 
 \section{Tree based methods}
 
-The idea behind tree based methods is to segement the observations, with rules that can be summerised
+The idea behind tree based methods is to segment the observations, with rules that can be summarised
 as a tree. \\
 
-Simple tree methods dont compare well in terms of accuracy to other modelling methods, however, are easy
+Simple tree methods don't compare well in terms of accuracy to other modelling methods, however, are easy
 to visualise and use for inference.\\
 
 To improve predictive performance can use multiple tree together; bagging, random forests and boosting
@@ -763,7 +874,7 @@ tree be created and then work through the tree subsets comparing each other in t
 
 \subsection{How can you limit the number of subsets compared?}
 
-\textbf{Pruning} allows a selection of the subset via penaltys added to the minimisation:
+\textbf{Pruning} allows a selection of the subset via penalties added to the minimisation:
 
 \begin{equation}
 	\sum^{|T|}_{m=1}\sum_{i\epsilon R_m}{(y_i-\hat{y}_{Rm})}^2 + \alpha|T| 
@@ -776,7 +887,7 @@ validation.
 
 \subsection{How is it used with Classification?}
 
-Use the most commonly occuring class in the region as the default response. And use error rate
+Use the most commonly occurring class in the region as the default response. And use error rate
 instead of RSS to choose regions.
 
 \begin{equation}
@@ -794,7 +905,7 @@ Error rate can be not sensitive enough so Gini Index is used:
 \end{equation}
 
 Gini index will take a small value if the p value is close to 0 or 1 and therefore kind of shows
-node purity in that the when the porportion of the class is very low or high Gini is low.
+node purity in that the when the proportion of the class is very low or high Gini is low.
 
 Can also use cross entropy function which is similar.
 
@@ -812,7 +923,7 @@ Cons:
 	\item Poor predictive accuracy
 \end{itemize}
 
-If the relationship is highly non linear and complex trees maybe the preffered model.
+If the relationship is highly non linear and complex trees maybe the preferred model.
 
 \subsection{What is bagging?}
 
@@ -931,7 +1042,7 @@ trade off and is chosen via cross validation.\\
 \subsection{How do you make the plane non linear?}
 
 Could use added predictor polynomials to make it non linear but instead the general method is to
-use kernals in the support vector machine.
+use kernels in the support vector machine.
 
 \subsection{What is the support vector machine?}
 
@@ -942,32 +1053,32 @@ support vector classifier) gives the classifier as:
 	f(x) = \beta_0 + \sum_{i\epsilon S}{\alpha_i\sum^p_{j=1}{x_{ij}x_{i'j}}}
 \end{equation}
 
-Can then generalise the inner product of points to be function (kernal):
+Can then generalise the inner product of points to be function (kernel):
 
 \begin{equation}
 	K\{x_i,x_{i'}\}
 \end{equation}
 
-Linear kernal version:
+Linear kernels version:
 \begin{equation}
 	K : \sum{x_ix_{i'}}
 \end{equation}
 
-Polynomial kernal version:
+Polynomial kernel version:
 \begin{equation}
 	K: (1+ \sum{x_ix_{i'}})^d;\; d:Dimensions
 \end{equation}
 
-Other kernal options exist ie, radial kernal.
+Other kernel options exist ie, radial kernel.
 
 \textbf{Use ROC curve to compare SVM and LDA.}
 
 \subsection{What if the number of classes is >2?}
 
-Use one versus one classifcation, create pairs of classes for all possible combinations and run
+Use one versus one classification, create pairs of classes for all possible combinations and run
 all SVMs choosing the highest shown class.\\
 
-One versus all classifcation, one class vs the rest to check with certainty if the observation belongs
+One versus all classification, one class vs the rest to check with certainty if the observation belongs
 to the chosen class.
 
 \subsection{Show SVC in loss penalty form}
@@ -980,18 +1091,22 @@ Fitting the support vector classifier \(f(x_i) = (\beta_0+\beta_1x_{i1}+\beta_2x
 \(\lambda\) acts like C as the penalty term. Can directly compare this form to other methods, which are
 made of loss functions and penalty terms, known as hinge loss.
 
-\subsection{How does logitisic and SVM compare?}
+\subsection{How does logistic and SVM compare?}
 
-If the classifiers are clearly seperated SVM is preffered, in overlapping regions logitisic regression is good.\\
+If the classifiers are clearly separated SVM is preferred, in overlapping regions logistic regression is good.\\
 
-Can also use kernal methods in other classifiers.
+Can also use kernel methods in other classifiers.
 
 \subsection{What about Support vector regression?}
 
-The margin is setup so that absoulte values greater than a constant contribute to the loss to determine
+The margin is setup so that absolute values greater than a constant contribute to the loss to determine
 the parameters.\\
 
 \textbf{TODO: ADD MORE INFO}
+
+\medskip
+
+\printbibliography
 %----------------------------------------------------------------------------------------
 %	FIGURE EXAMPLE
 %----------------------------------------------------------------------------------------

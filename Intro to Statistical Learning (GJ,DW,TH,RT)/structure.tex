@@ -42,6 +42,13 @@
 \usepackage{array}
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}} %Allows centering of tables
 
+\usepackage[
+backend=biber,
+style=ieee,
+sorting=ynt
+]{biblatex}
+
+\addbibresource{refs.bib} %Imports bibliography file
 %----------------------------------------------------------------------------------------
 %	DOCUMENT MARGINS
 %----------------------------------------------------------------------------------------
