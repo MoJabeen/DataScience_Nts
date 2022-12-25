@@ -78,7 +78,7 @@ There is no response/outcome variable, ie clustering.\\
 Residual sum of squares is minimised in regression to calculate the parameters.
 
 \begin{equation}
-	RSS = (y_1-\beta_0-\beta_1x_1)^2 + \cdots +(y_n-\beta_0-\beta_1x_n)^2
+	RSS = (y_1-\hat{y_1})^2 + \cdots +(y_n-\hat{y_n})^2
 \end{equation}
 
 \section{Quality of fit}
@@ -196,7 +196,7 @@ and confidence intervals will be lower.\\
 Checking for correlation can be done visually by plotting the residual terms, if there tracking in the residuals
 (adjacent values are similar) this is a sign of correlation.
 
-\subsubsection{Variance of terms}
+\subsubsection{Variance of error terms}
 
 Can check for heteroscedasticity by plotting residuals and observing the spread. Can reduce the spread
 via transformation ie log or sqrt. Can also use weighted methods to counteract the changing var.
