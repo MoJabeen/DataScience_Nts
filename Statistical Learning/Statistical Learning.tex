@@ -245,6 +245,14 @@ Possible fix it to drop linear terms or combine them.
 
 \section{Classification}
 
+\subsection{What is Naive Bayes?}
+
+Using bayes theorem and the idea that all predictors are independent from each other.
+Can simply think of the problem as the frequency of class y in the data set to determine the
+probability. The distribution of P(X|Y) is the differing forms of naive bayes.\\
+
+Very efficient and can be effective in some world scenarios when there is independent predictors.
+
 \subsection{What is K nearest neighbours?}
 
 KNN identifies the K points closest to training point x, shown as \(\eta_o\). The conditional probability is then
@@ -550,7 +558,21 @@ to get new data to train and validate on. Other types include "Smooth sampling" 
 adding noise to normal dist data. \\
 
 This can be applied to a wide range of statistical methods, especially useful for models whose variance
-is difficult to measure.
+is difficult to measure.\\
+
+\textbf{The bootstrap approach can be used  to assess the
+variability of the coefficient estimates and predictions from a statistical learning method.}
+
+\subsubsection{Types of sampling}
+
+\begin{itemize}
+	\item \textbf{Basic Sampling:}Random resampling with replacement (BasicSampling)
+	\item \textbf{Antithetic Sampling:}Antithetic resampling, introducing negative correlation between samples
+	\item \textbf{Balanced Sampling:} Balanced random resampling, reducing bias
+	\item \textbf{Exact Sampling:} Exact resampling, iterating through all unique resamples, deterministic bootstrap, suited for small samples sizes
+	\item \textbf{Residual Sampling, Wild Sampling:} Resampling of residuals in generalized linear models 
+	\item \textbf{Maximum Entropy Sampling:} Maximum Entropy bootstrapping for dependent and non-stationary datasets 
+\end{itemize}
 
 \section{Regularisation}
 
