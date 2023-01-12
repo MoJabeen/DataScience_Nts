@@ -28,7 +28,7 @@
 \section{General}
 
 MLJ is a machine learning toolbox for Julia, that wraps a large number of models and provides
-great tools such as resampling and evaluation.\\
+great tools such as resampling and evaluation \cite{Blaom2020} \cite{blaom2020flexible}.\\
 
 Models are structs storing hyperparameters.
 
@@ -61,7 +61,22 @@ Models are structs storing hyperparameters.
 
 Each model has an expected variable type needed to train it:\\
 
-\textbf{target\_scitype(model)} provides type needed.
+\textbf{target\_scitype(model)} provides type needed.\\
+
+\begin{lstlisting}[
+	caption= Change type, % Caption above the listing
+	language=python, % Use Julia functions/syntax highlighting
+	frame=single, % Frame around the code listing
+	showstringspaces=false, % Don't put marks in string spaces
+	numbers=left, % Line numbers on left
+	numberstyle=\large, % Line numbers styling
+	]
+
+	#Change type of var
+
+	y = coerce(df, :col=type,...)
+
+\end{lstlisting}
 
 \newpage
 
@@ -90,6 +105,39 @@ Used to store training outcomes.
 	misclassification_rate(yhat, test)
 
 \end{lstlisting}
+
+Can also evaulate! machines.
+
+\subsection{prediction}
+
+To predict with a given probability for a class use \textbf{broadcast}.\\
+
+For a matrix of all classes: \textbf{pdf}.\\
+
+For an output of a class: \textbf{predict\_mode}.
+
+\section{Hyperparameter tuning}
+
+\begin{itemize}
+	\item Create ensemble model
+	\item Create ranges for parameters
+	\item wrap in tuned model
+	\item create mach, fit data
+	\item report on best model
+	\item mach will become the best model
+\end{itemize}
+
+\textbf{learning\_curve()} gives a performance line for a tuning parameter.
+
+\section{Pipeline}
+
+Linear set of models chained together, that can be evaluated and used as a single model.\\
+
+For example: Change var type -> tune parameter -> model -> train.
+
+\newpage
+
+\printbibliography
 
 %----------------------------------------------------------------------------------------
 %	FIGURE EXAMPLE
