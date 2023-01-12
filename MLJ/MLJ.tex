@@ -116,7 +116,17 @@ For a matrix of all classes: \textbf{pdf}.\\
 
 For an output of a class: \textbf{predict\_mode}.
 
+\subsection{Inspection}
+
+Two methods: fitted_params and report.\\
+
+\textbf{Fitted params:} The learned parameters for a machine.\\
+
+\textbf{report:} 
+
 \section{Hyperparameter tuning}
+
+Check notebook Resampling(Julia-MLJ) for example.
 
 \begin{itemize}
 	\item Create ensemble model
@@ -127,13 +137,51 @@ For an output of a class: \textbf{predict\_mode}.
 	\item mach will become the best model
 \end{itemize}
 
-\textbf{learning\_curve()} gives a performance line for a tuning parameter.
+\textbf{learning\_curve()} gives a performance line for a tuning parameter. 
 
 \section{Pipeline}
 
 Linear set of models chained together, that can be evaluated and used as a single model.\\
 
-For example: Change var type -> tune parameter -> model -> train.
+For example: Change var type |> tune parameter |> model |> train.
+
+\section{Resampling}
+
+\begin{lstlisting}[
+	caption= Resampling, % Caption above the listing
+	language=python, % Use Julia functions/syntax highlighting
+	frame=single, % Frame around the code listing
+	showstringspaces=false, % Don't put marks in string spaces
+	numbers=left, % Line numbers on left
+	numberstyle=\large, % Line numbers styling
+	]
+
+	#Split data into sections of chosen percentage, 
+	#	can also shuffle
+	holdout = Holdout(; fraction_train=0.7,
+                     shuffle=nothing,
+                     rng=nothing)
+
+	# Cross validate over number of folds
+	cv = CV(; nfolds=6,  shuffle=nothing, rng=nothing)
+
+	# For classification problems aims to retain the connection
+	#	between the predictors in train and test with the 
+	#	response class level.
+
+	stratified_cv = StratifiedCV(; nfolds=6,
+                               shuffle=false,
+                               rng=Random.GLOBAL_RNG)
+
+
+	#CV for when observations are chronological and not expected 
+	#	to be independent.
+
+	tscv = TimeSeriesCV(; nfolds=4)
+
+
+\end{lstlisting}
+
 
 \newpage
 
