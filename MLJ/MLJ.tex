@@ -41,7 +41,8 @@ Models are structs storing hyperparameters.
 	numberstyle=\large, % Line numbers styling
 	]
 
-	#Split data randomly with seed (rng)
+	#Split data randomly with seed (rng) 
+	#	if y and X need to be separated
 	y, X = unpack(df,==(:col);rng=123); 
 
 	df |> pretty #Output pretty version
@@ -182,6 +183,87 @@ For example: Change var type |> tune parameter |> model |> train.
 
 \end{lstlisting}
 
+\newpage
+
+\section{Scikit Learn: Notes}
+
+Many of the models used in MLJ are derived from Scikit learn \cite{scikit-learn}.
+
+\subsection{Support vector machine}
+
+\textbf{Advantages:}
+\begin{itemize}
+	\item Works well with high dimensional spaces
+	\item Works well if p > n
+	\item memory efficient
+	\item Versatile (different kernels)
+\end{itemize}
+
+Three types:\\
+\textbf{SVC}: Radial kernel, with cost as key balancing hyperparameter.\\
+\textbf{NuSVC}: Radial kernel, with number of support vectors as key balancing hyperparameter.\\
+\textbf{LinearSVC}: Linear kernel.\\
+
+OneclassSVM is used for outlier detection.\\
+
+\begin{equation}
+	O(n_{factor}*n^3_{samples})
+\end{equation}
+
+For regression SVR, NuSVR and LinearSVR exist.\\
+
+If certain classes or samples have higher importance weights can be used.
+
+\subsubsection{MultiClass}
+
+If more than two classes are used SVC and NuSVC use one versus one model approach, linear uses
+one versus all.
+
+\begin{equation}
+	O(1-1) = \frac{n(n-1)}{2}
+\end{equation}
+
+\begin{equation}
+	O(1-n) = n
+\end{equation}
+
+\subsubsection{Probabilistic value}
+
+The LIBSVM package models do not directly provide probabilistic scores. Use the
+decision\_function to get a score per class.\\
+
+If hyperparameter probability is set to true, class membership probabilities are available
+via predict\_proba.\\
+
+However, scores do not always align with probability and its is recommended to use decision
+function.
+
+\subsubsection{Parameters}
+
+\textbf{Cost:} Trade off between misclassification and decision surface simplicity, lower C
+gives a simpler decision surface.\\
+
+\textbf{Gamma:} How much influence an observation has.
+
+\subsubsection{Tips}
+
+\begin{itemize}
+	\item Data should be scaled
+	\item L1 penalization yields a sparse selection of predictors.
+	\item C and gamma are key parameters
+	\item Use Grid search CV
+\end{itemize}
+
+\subsection{Outlier Detection}
+
+\textbf{Outlier:} Data far from others, in the training data.\\
+\textbf{Novelty:} Outlier not in training data.\\
+
+Unsupervised methods include using estimator.fit and estimator.predict functions. Outlier methods
+isolation forest and neighbor local outlier factor. OneClassSVM needs training for effective 
+outlier detection.\\
+
+Primary novelty detection is one OneClassSVM.
 
 \newpage
 
