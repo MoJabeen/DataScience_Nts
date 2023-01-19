@@ -331,8 +331,6 @@ The below is based on how the Betas are calculated (this is for linear regressio
 	SE(\beta_1)^2 = \frac{\sigma^2}{\sum{(x_i-\bar{x})^2}}
 \end{equation}
 
-
-
 \subsection{What ways can you validate the parameters?}
 
 Use confidence intervals, z/t tests and hypothesis tests.\\
@@ -361,6 +359,13 @@ Multiple predictors can show how the interweaving between each other and the out
 not included in the equation.\\
 
 Multi-class logistic regression exists but is not really used.
+
+\subsection{WHat is the equivocal zone?}
+
+Adjusting the boundary of the required class boundary before it is accepted ie a min prob for one class maybe adjusted to
+0.6, in a binary scenario 0.6 for one class is equivalent to 0.4 for the other.\\
+
+This threshold is varied when creating an ROC graph.
 
 \subsection{What is linear discriminant analysis?}
 
@@ -445,9 +450,15 @@ poor test error rates.
 Determine which type of error is being made in terms of the classes, comparing the error rate for
 each class.\\
 
+Accuracy: Correctly predicted/Total \\
 Sensitivity: Sensitivity is the percentage of true positives (e.g. 90\% sensitivity = 90\% of people who have the target disease will test positive)\\
-Specificity: Specificity is the percentage of true negatives (e.g. 90\% specificity = 90\% of people who do not have the target disease will test negative).
+Recall: Percentage of positive values accurately predicted.\\
+Precision: Percentage of predicted positive and are.\\
+Specificity: Specificity is the percentage of true negatives (e.g. 90\% specificity = 90\% of people who do not have the target disease will test negative).\\
 
+False positive rate = 1 - specificity\\
+
+F1 Score: Harmonic mean of precision and recall (trade off).
 \subsection{How to accommodate non equal classes?}
 
 If the bias between classes is not equal the boundary can be altered to instead of being the max,
@@ -455,8 +466,10 @@ match the criteria of the problem.
 
 \subsection{What is ROC curve?}
 
-Shows the error rate using different thresholds, the overall performance of the model is the
+Shows the error rate using different thresholds of class boundary, the overall performance of the model is the
 area under the curve.\\
+
+Can also be considered as showing the trade off between specificity and sensitivity.\\
 
 If area under the curve is <=0.5 its assumed the performance is no better than chance.
 
@@ -854,6 +867,8 @@ as a tree. \\
 
 Simple tree methods don't compare well in terms of accuracy to other modelling methods, however, are easy
 to visualise and use for inference.\\
+
+Trees are also less sensitive to data processing than for linear regression.
 
 To improve predictive performance can use multiple tree together; bagging, random forests and boosting
 are examples of this.
