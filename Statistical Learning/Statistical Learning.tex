@@ -31,6 +31,8 @@
 \section{Sources}
 
 The main source for the information and figures below is the book \textit{An Introduction to Statistical Learning} \cite{james2013introduction}.
+Other elements were also taken from the book \textit{Applied Predictive Modelling} \cite{noauthororeditor2013applied}.
+Markov models was taken from the book \textit{Introduction to machine learning} \cite{Alpaydin14}.
 
 \section{General}
 
@@ -684,6 +686,29 @@ Cross validation does not assume any model form and so is preferred in comparing
 Choose the lowest predictor error score in a cross validation which is within one standard error (of the MSE for each model)
 of the lowest CV error.
 
+\subsection{How are t stats used to compare predictors?}
+
+The mean output of a model can be compared using different predictors, via the t stat or if mean does not
+follow a normal dist use Wicoxon ranksum test.\\
+
+In this case it is better to compare in a binary predictor format.
+
+\subsection{What is the Relief algo?}
+
+For a binary case compare random observations predictions to the predictions of closest to it with the
+one from each class (hit (same class) miss (diff class)). Depending on the distance, hits should be close
+misses far the average score is calculated. The higher the score the more important the predictor.
+
+\subsection{What is MIC?}
+
+Creates many grids in 2D space on the graph showing the relationship between predictor and outcome. Determining the
+grid with the largest association value which is the score assigned to the predictor. Similar to tree splitting.
+
+\subsection{What are two ways feature selection can be thought of?}
+
+\textbf{Wrapper:} Compare models to determine predictor of choice.\\
+\textbf{Filter:} Compare predictors before models.
+
 \section{Shrinkage}
 
 Reduce the parameters of the model, two methods: Ridge regression and LASSO.
@@ -1139,7 +1164,67 @@ Can also use kernel methods in other classifiers.
 The margin is setup so that absolute values greater than a constant contribute to the loss to determine
 the parameters.\\
 
-\textbf{TODO: ADD MORE INFO}
+\section{Markov Models}
+
+\subsection{Markov Process}
+
+System has S states, the state at time t is shown as $q_t$.
+
+\begin{equation}
+	q_t = S_i
+\end{equation}
+
+The probability of a state is only dependant on the current state, nothing before:
+
+\begin{equation}
+	P(q_{t+1}=S_j|q_t = S_i)
+\end{equation}
+
+Transition probability ($S_i -> S_j$) is independent of time.\\
+
+A sequence of states is the sum of the transition probabilities and the initial probability. 
+
+\subsection{Hidden Markov Model}
+
+In the hidden model states are not observable, but depending on the state of the system the model will produce
+a probability function for an observation. I.e. in a known model the box 1 contains blue balls, in a hidden model
+the blue ball may come from any box.\\
+
+The HMM model is used to find the maximum likelihood of an observation given the current state, or to deduce
+the maximum likelihood of the current state given a sequence of observations.\\
+
+HMM models are specialised for known sequenced observations that are only dependant on the present, ie speech
+synthesis. Can also be layered to combine probability functions.\\
+
+HMM models allow inference on hidden generative processes via indirect observations correlated to these process
+(Determine the state of a system via observations correlated to the state).Can be considered within reinforcement learning.\\
+
+Given a set of data the state of a HMM is estimated by bayesian estimation (expectation maximisation).
+
+\subsubsection{Prob function}
+
+The prob function for an observation sequence or state could be in the form of Multivariate gaussian:
+
+\begin{equation}
+	p(x_t|z_t=k,\theta)
+\end{equation}
+
+\subsubsection{State space modelling}
+
+Three methods to use these models:
+
+\begin{itemize}
+	\item Predicition
+	\item Filtering: Estimate current values
+	\item Smoothing: Estimate past values
+\end{itemize}
+
+\section{Bayesian Estimation}
+
+Treats the value to be determined as a random variable not an unknown constant and therefore each response
+has a probability distribution and related stats methods.
+
+\newpage
 
 \medskip
 
