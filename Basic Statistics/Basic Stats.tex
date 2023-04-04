@@ -290,6 +290,12 @@ K: Number of independent variables
 
 L: Log likelihood estimate
 
+\subsection{Standard error}
+
+The error in the mean calculation:
+
+\[ SE = \frac{\sigma }{\sqrt{n}} \]
+
 \section{Distribution}
 
 \subsection{General}
@@ -505,7 +511,8 @@ value should always be less than z value at the chosen interval.\\
 
 \textit{Use two tailed for a 2 dimensional comparison and one tail for a 1 dimensional comparison.}\\
 
-For a two tailed test looking for an interval of 95\% the alpha is 0.025 and the value is 1.96.
+For a two tailed test looking for an interval of 95\% the alpha is 0.025 (as double tailed) and 
+with a normal dist the critical value is 1.96.
 
 \subsection{How do you calculate the confidence interval
 ?}
@@ -514,7 +521,7 @@ If n observations are made from a N(\(\mu,\sigma^2)\) dist, the random variable 
 mean of \(\mu\) and variance of \(\frac{\sigma^2}{n}\).\\
 
 To calculate the confidence interval of a sample mean, use the
-variable Z below, where \(\bar{X}\) is random variable corresponding to the
+variable Z below (the critical value), where \(\bar{X}\) is random variable corresponding to the
 sample mean:
 
 \begin{equation}
@@ -557,7 +564,14 @@ A number of assumptions regarding Independence, homogenity (similar variance) an
 
 \subsection{How are test statistics used?}
 
-Test statistics measure the relationship between the variables and the null hypothesis.
+Test statistics measure the relationship between the variables and the null hypothesis.\\
+
+Assuming the null hypothesis is true, the probability a more extreme (in a wrong way) test stat in the direction of the
+alternative is observed. If < alpha unlikely a extreme stat toward the alternative will be seen if > alpha (big)
+then likely.\\
+
+If p small (< alpha) null rejected for alternative, essentially gives validation to the current alternative.
+If p big (> alpha) null cannot be rejected, unknown about the current alternative.
 
 \subsection{What is the p value?}
 
@@ -664,6 +678,24 @@ of a N(0,1).\\
 
 \textbf{Two tailed tests gives a much more complete analysis of the data
 set.}
+
+\subsection{Example}
+
+A random sample of carrots are taken from a field, the defined length of carrot is 7.5 inch.
+
+\[H_o:\mu =7.5\] 
+\[H_A:\mu\neq 7.5\]
+
+As the dist is of carrot sizes is likely normal, the sample size of N being 10 a t test is used.
+
+If the significance level used an alpha of 0.05, the null hypothesis would be rejected if the t stat
+is less than -2.2616 or greater than 2.2616. \\
+
+The t stat is 1.54 and therefore is not in the \textbf{critical region} and does not reject the null
+hypothesis. \\
+
+The p value is the area under the graph above/below the critical value. The p value here is 0.158
+which is greater than the alpha value showing the prob of it being outside the interval 
 
 \subsection{What are some basic terms
 ?}
