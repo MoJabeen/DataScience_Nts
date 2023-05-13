@@ -169,6 +169,8 @@ The F stat:
 	F=\frac{(TSS-RSS)/p}{RSS/(n-p-1)}
 \end{equation}
 
+TSS: Total sum of squares.\\
+
 Methods that account for all predictors such as the F stat should be used instead of individual
 stats for each variable inferred from collectively as this will be less accurate.
 
@@ -275,7 +277,7 @@ few observations per predictor.
 
 To create a regression problem from a classification, you would be forced to create some type of ordering of the qualitative
 variables if >2. This ordering may not be true for the data set. However with a binary classification least squares is possible, the
-issue is that least squares does not have the required boundaries for a binary decision ie 0-1 so you would create a useless areas.
+issue is that least squares does not have the required boundaries for a binary decision ie 0-1 so you would create useless areas.
 
 \subsection{What is logistic regression?}
 
@@ -453,14 +455,31 @@ Determine which type of error is being made in terms of the classes, comparing t
 each class.\\
 
 Accuracy: Correctly predicted/Total \\
-Sensitivity: Sensitivity is the percentage of true positives (e.g. 90\% sensitivity = 90\% of people who have the target disease will test positive)\\
-Recall: Percentage of positive values accurately predicted.\\
-Precision: Percentage of predicted positive and are.\\
+
+Sensitivity (Recall): Sensitivity is the percentage of true positives (divided by total of values actually positive) (e.g. 90\% sensitivity = 90\% of people who have the target disease will test positive)\\
+
+Precision: Percentage of predicted positive and are (divided by total of values predicted positive)\\
+
 Specificity: Specificity is the percentage of true negatives (e.g. 90\% specificity = 90\% of people who do not have the target disease will test negative).\\
 
 False positive rate = 1 - specificity\\
 
 F1 Score: Harmonic mean of precision and recall (trade off).
+
+\subsection{What is Kappa?}
+
+Useful for multi class or imbalanced problems. Accuracy is misleading in imbalanced class problems, precision and
+recall are preferred. Keppa is also weighted based on the freq of each class and therefore more representative.
+
+\begin{equation}
+	\kappa = \frac{p_o - p_e}{1 - p_e}
+\end{equation}
+
+$p_o$: Observed agreement\\
+$p_e$: Expected agreement.\\
+
+Essentially measures how much better the classifier is working vs a random guesser dependant on a class freq.
+
 \subsection{How to accommodate non equal classes?}
 
 If the bias between classes is not equal the boundary can be altered to instead of being the max,
@@ -473,7 +492,12 @@ area under the curve.\\
 
 Can also be considered as showing the trade off between specificity and sensitivity.\\
 
-If area under the curve is <=0.5 its assumed the performance is no better than chance.
+If area under the curve is <=0.5 its assumed the performance is no better than chance.\\
+
+The plot is true postive rate (freq of correctly finding pos) vs false postive rate (freq of incorrectly labelled as pos
+ ie is actually neg). 
+ 
+\textbf{Want a 1 of TPR (all correctly labelled) and 0 of FPR (none wrongly labelled as positive).}
 
 \subsection{Different classification measurements}
 
@@ -485,7 +509,7 @@ If area under the curve is <=0.5 its assumed the performance is no better than c
 
 \subsection{Quadratic Discriminant Analysis}
 
-The main difference to LDA is that there is not an assumption of common variance between distribution,
+The main difference to LDA is that there is not an assumption of common variance between distributions,
 this leads to a quadratic boundary function. 
 
 \subsubsection{What are the pros/cons of QDA?}
@@ -513,8 +537,8 @@ Can improve non linear performance by adding transformed predictors, ie \(X_1^2,
 
 \section{Resampling methods}
 
-Completely separate data as the test set may not make sense to use as that could be used as
-a valuable method to train the original data set. So instead you can repeatedly draw samples
+Completely separate data for the test set may not make sense to use as that could have been used as
+valuable data for training. So instead you can repeatedly draw samples
 from the data set you have and refit the model and compare to other samples as test data to gain
 info about the models setup.\\
 
