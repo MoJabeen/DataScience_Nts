@@ -107,7 +107,9 @@ Used to store training outcomes.
 
 \end{lstlisting}
 
-Can also evaulate! machines.
+Can also evaulate! machines.\\
+
+Machines will throw a warning if there is a mixmatch of types (continous and count).
 
 \subsection{Prediction}
 
@@ -144,7 +146,26 @@ Check notebook Resampling(Julia-MLJ) for example.
 
 Linear set of models chained together, that can be evaluated and used as a single model.\\
 
-For example: Change var type |> tune parameter |> model |> train.
+For example: Change var type |> tune parameter |> model |> train.\\
+
+Similar to recipes, pipelines are a series of transforms on data, then fed into a model.
+
+\begin{lstlisting}[
+	caption= Pipeline example, % Caption above the listing
+	language=python, % Use Julia functions/syntax highlighting
+	frame=single, % Frame around the code listing
+	showstringspaces=false, % Don't put marks in string spaces
+	numbers=left, % Line numbers on left
+	numberstyle=\large, % Line numbers styling
+	]
+
+	pipe = X |> Standardizer |> Model
+
+	TunedModel(model=pipe)
+	Machine(pipe,X,y)
+	evaulate(pipe)
+
+\end{lstlisting}
 
 \section{Resampling}
 
@@ -182,6 +203,87 @@ For example: Change var type |> tune parameter |> model |> train.
 
 
 \end{lstlisting}
+
+\section{Parallel}
+
+Using the parameter \textbf{acceleration} in train!, can be set to:
+
+\begin{itemize}
+	\item CPU1 : Single threaded
+	\item CPUProcesses: Multi process (core)
+	\item CPUThreads: Mutli threaded
+	\item CUDALibs: GPU Computation
+\end{itemize}
+
+Or can set \textbf{MLJ.default\_resource()} to one of the above.
+
+\section{Transformers}
+
+Work similar to models, but only require the input data as they are unsupervised.
+
+\begin{lstlisting}[
+	caption= Standardizer, % Caption above the listing
+	language=python, % Use Julia functions/syntax highlighting
+	frame=single, % Frame around the code listing
+	showstringspaces=false, % Don't put marks in string spaces
+	numbers=left, % Line numbers on left
+	numberstyle=\large, % Line numbers styling
+	]
+
+	#features are the chosen predictors to standardise.
+	model = Standardizer(features=)
+
+\end{lstlisting}
+
+\subsection{PCA}
+
+\begin{itemize}
+	\item PCA: Linear
+	\item Kernal PCA: Non linear
+	\item Probabilistic: Gaussian 
+\end{itemize}
+
+\begin{lstlisting}[
+	caption= Standardizer, % Caption above the listing
+	language=python, % Use Julia functions/syntax highlighting
+	frame=single, % Frame around the code listing
+	showstringspaces=false, % Don't put marks in string spaces
+	numbers=left, % Line numbers on left
+	numberstyle=\large, % Line numbers styling
+	]
+
+	#params include max output dims,kernel,solver,inverse transform
+	#,convergence total, max iterations.
+	model = KernelPCA()
+
+\end{lstlisting}
+
+
+\section{Performance}
+
+\[ConfusionMatrix()(y_{pred},y)\]
+
+\[ false\;pos\;rate,\; true\; postive\; rate,\; thresholds = roc(y_{probpredict},y) \]
+
+\section{Save}
+
+\begin{lstlisting}[
+	caption= Saving machine, % Caption above the listing
+	language=python, % Use Julia functions/syntax highlighting
+	frame=single, % Frame around the code listing
+	showstringspaces=false, % Don't put marks in string spaces
+	numbers=left, % Line numbers on left
+	numberstyle=\large, % Line numbers styling
+	]
+
+	# SAVE
+	MLJ.save("name.jls",mach)
+
+	# LOAD
+	mach = machine("name.jlso")
+
+\end{lstlisting}
+
 
 \newpage
 
@@ -229,14 +331,9 @@ one versus all.
 
 \subsubsection{Probabilistic value}
 
-The LIBSVM package models do not directly provide probabilistic scores. Use the
-decision\_function to get a score per class.\\
+Use model ProbabilisticSVC, to provide probability values.\\
 
-If hyperparameter probability is set to true, class membership probabilities are available
-via predict\_proba.\\
-
-However, scores do not always align with probability and its is recommended to use decision
-function.
+Use wrapper BinaryThresholdPredictor(model; threshold=0.5) to change to deterministic.
 
 \subsubsection{Parameters}
 
